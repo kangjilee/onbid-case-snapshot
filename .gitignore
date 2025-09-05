@@ -1,0 +1,10 @@
+**/.env*
+data/**
+attached_assets/**
+.local/**
+node_modules/
+dist/
+__pycache__/
+.pytest_cache/
+.coverage
+.DS_Store
