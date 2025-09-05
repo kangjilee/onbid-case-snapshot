@@ -4,7 +4,8 @@
       "Bash(python -m pytest tests/test_security.py -v)",
       "Bash(python:*)",
       "Bash(pip install:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git rm:*)"
     ],
     "deny": [],
     "ask": []
