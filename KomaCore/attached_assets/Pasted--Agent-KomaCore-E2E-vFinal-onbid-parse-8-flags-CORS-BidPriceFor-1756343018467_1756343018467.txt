@@ -1,0 +1,75 @@
+[Agent 작업요청] KomaCore E2E 보강 vFinal
+목표: /onbid/parse 확정(8키+flags+파일저장) · CORS 최종화 · 프런트(BidPriceForm) 실호출/차트 렌더까지 증빙 스모크 리포트 완성.
+
+환경
+- Backend: FastAPI KomaCore (docs 공개), x-api-key=dev
+- Frontend: komacore-ui (Vite+React+TS). .env 사용: VITE_API_BASE, VITE_API_KEY
+- 중요파일: main.py, onbid_parser.py, utils.py, tests/, komacore-ui/src/components/BidPriceForm.tsx, .env.*, Makefile
+
+A) /api/v1/onbid/parse 보강 & 검증
+1. 요청: body에 {"case_no"?:string, "url"?:string} 중 1 필수(둘 다 있으면 url 우선).
+2. 응답 스키마를 정확히 채움(없으면 null):
+   {
+     "asset_type", "use_type", "address",
+     "areas":{"building_m2","land_m2","land_right"},
+     "appraisal","min_bid","round",
+     "duty_deadline","pay_due":{"base_days":30,"grace_days":10},
+     "notes",
+     "flags":{"지분","대지권없음","건물만","부가세","특약"},
+     "attachments":[{"name","saved"}],
+     "status":"ok|pending","case_no"
+   }
+   → **최소 8개 키 값**이 null이 아닌 상태로 반환.
+3. 플래그 정규식(필수 반영):
+   - 지분: (공유|지분)\s*매각
+   - 대지권없음: (대지권\s*미등기|대지권\s*없음)
+   - 건물만: (건물만\s*매각|토지\s*제외)
+   - 부가세: (부가가치세\s*(별도|과세)|VAT\s*(별도|과세))
+   - 특약: (특약|유의사항|매수인\s*책임|인수\s*사항)
+4. 저장: data/raw/{case_no}/ 폴더 생성, raw_data.json + 원문(HTML/PDF 텍스트) 저장.
+   - 첨부 다운로드가 불가하면 notes에 사유 기입, attachments는 빈 배열 허용하되 **raw_data.json은 반드시 생성**.
+5. 테스트: 샘플 2건으로 200 응답, 8키 이상 충족 확인. 단위테스트 추가: tests/test_onbid_parse.py (mock HTML로 키 추출 검증).
+
+B) 프런트 BidPriceForm.tsx 에러 수정 & 실호출
+1. **이슈 고지(반드시 해결):** 과거 “Agent ran into an error”가 BidPriceForm.tsx 수정 직후 발생. 원인(타입/필드명/네트워크) 식별 후 수정.
+2. .env 체크:
+   - VITE_API_BASE = https://<backend-host>/api/v1
+   - VITE_API_KEY = dev
+3. axios 인스턴스에 기본 헤더로 {"x-api-key":"dev"} 설정. 401/403/422 시 에러 메시지 토스트 노출.
+4. /bidprice 응답 매핑 확인:
+   - data.scenarios.{conservative|core|aggressive}.{bid_price,monthly_net,annual_roi}
+   - data.affordable_bid.bid_price
+5. “샘플로 계산” 버튼으로 아래 JSON C 호출 → 카드 3개 + ROI 막대차트 렌더 스샷 확보.
+6. (옵션) /onbid/parse 결과(appraisal/min_bid/round)를 폼에 프리필.
+
+C) CORS/보안 최종화
+1. 백엔드 .env.*의 CORS_ORIGINS에 프런트 미리보기 도메인 추가 후 재시작.
+2. 공개 엔드포인트(/, /docs, /openapi.json, /api/v1/healthz, /api/v1/meta) 접근 가능 유지.
+3. 보호 엔드포인트(/profile, /analyze, /bidprice, /onbid/parse)만 x-api-key 요구.
+
+D) 스모크 테스트(증빙 필수)
+1. Swagger: /docs 목록 스샷(5개 엔드포인트 모두 보임).
+2. cURL 5건(모두 200)과 응답 JSON 저장:
+   - GET /api/v1/healthz
+   - POST /api/v1/profile  -d JSON_A
+   - POST /api/v1/analyze  -d JSON_B
+   - POST /api/v1/bidprice -d JSON_C
+   - POST /api/v1/onbid/parse -d JSON_D
+3. 파일 저장 확인: ls -al data/raw/<case_no>/ 결과 스샷(≥ raw_data.json 1개).
+4. 프런트 스샷 2장: (i) 카드+차트 정상, (ii) 401/429 에러 핸들링 화면.
+5. 산출물 업데이트: SMOKE_TEST_REPORT.md(표: 엔드포인트/상태/응답시간/핵심키) & docs/curl.md.
+
+E) 커맨드(복사/실행)
+H='-H "content-type: application/json" -H "x-api-key: dev"'
+curl -s https://<host>/api/v1/healthz
+curl -s $H -X POST https://<host>/api/v1/profile  -d '{"income_monthly":6500000,"existing_loans_monthly":800000,"credit_score":820,"stress_rate":0.07,"ltv_cap":0.7}'
+curl -s $H -X POST https://<host>/api/v1/analyze  -d '{"asset_type":"압류재산","use_type":"근린상가","flags":{"지분":false,"대지권없음":false,"건물만":false,"임차인대학력":true,"부가세":false}}'
+curl -s $H -X POST https://<host>/api/v1/bidprice -d '{"appraisal":235000000,"min_bid":164500000,"round":2,"target_monthly_net":1500000,"target_roi":0.09,"rent_monthly":1900000,"vacancy_rate":0.08,"repair":12000000,"purchase_taxes_rate":0.047,"loan_rate":0.064,"loan_ltv":0.65,"holding_costs_monthly":250000,"vat_applicable":false}'
+curl -s $H -X POST https://<host>/api/v1/onbid/parse -d '{"url":"https://www.onbid.co.kr/auction/case/12345"}'
+ls -al data/raw/12345/
+
+F) 완료 기준(모두 충족 시 “E2E 완료” 선언)
+- /onbid/parse 200, **최소 8키+flags**, case_no 세팅, data/raw/<case_no>/raw_data.json 존재.
+- /bidprice 실호출로 프런트 카드 3개+ROI 차트 렌더 스샷.
+- 5개 cURL 200 + JSON 증빙 + 파일목록 스샷이 SMOKE_TEST_REPORT.md에 포함.
+- 커밋 메시지에 prefix: "fix(front):", "feat(parse):", "chore(docs):" 사용.

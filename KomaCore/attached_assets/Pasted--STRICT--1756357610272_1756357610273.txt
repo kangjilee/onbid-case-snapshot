@@ -1,0 +1,91 @@
+\[요약 결론]
+원인: **모크/하드코딩 잔존 + 케이스키 불일치 + 실패 시 임의데이터 폴백 + 상태/캐시 오염**.
+대책: **모크 완전 차단(STRICT)→정규화 고정→실파싱 검증→캐시 분리→상태 초기화→스모크 자동화** 순으로 수술.
+결과: 잘못된 물건이 뜨면 **무조건 에러 배너**만 표시하고, **실매물만 렌더**.
+
+\[Agent 작업요청(최종 안정화·실매물만 렌더) — 그대로 붙여넣기]
+
+```
+[목표] 사건 입력 시 “실제 온비드 페이지의 그 사건”만 표시. 실패/차단 시 임의데이터·과거데이터 사용 금지(STRICT 모드).
+
+A) STRICT 모드 스위치(기본 ON)
+- env: SCRAPER_STRICT=true
+- 규칙: parsed==null 또는 mismatch==true면 프런트 렌더 금지. mock/fake 사용 금지. 에러배너+재시도/force만 노출.
+
+B) 케이스키 정규화/검증(재구현)
+- 입력 파싱: URL→ onbid:<cltrNo> / 사건번호→ case:<원문>(하이픈 유지). 숫자만 변환·트림 금지.
+- 응답 검증: 상세페이지에서 ‘사건번호/관리번호’ 라벨값을 파싱하여 case_no_extracted 생성.
+- 일치성: requested_case == (case_no_extracted || case_key) 아니면 error_code=MISMATCH, parsed=null, raw 저장.
+
+C) 네트워킹/안티봇 대응(안전가드)
+- requests.Session + 고정 UA(Chrome 최신), Accept-Language=ko, Referer=onbid.
+- 타임아웃 7s, retry<=2(지수백오프), RPS<=1, 랜덤슬립 800–1500ms.
+- 3xx/403/캡차/빈본문 시 error_code∈{REMOTE_HTTP_403,CAPTCHA_DETECTED,EMPTY_BODY}로 즉시 실패(폴백 금지).
+
+D) 파서 확정(라벨 기반 + 백업 XPath)
+- 공통 라벨: 감정가, 최저입찰가, 차수, 자산구분, 처분방식, 세부용도, 소재지, 대금납부기한, 배분(배당)요구 종기, 첨부파일.
+- 금액/면적 정규화: KRW→int, m²→float, ‘3차’→3.
+- 위험플래그 v1: {지분, 대지권없음, 건물만, VAT별도, 점유/특약} 키워드 매칭(+raw_text 보관).
+
+E) 캐시·저장 분리(오염 차단)
+- 저장: data/raw/{case_key}/{ts}/response.html, parsed.json, meta.json.
+- 캐시: data/cache/{case_key}/latest.json (TTL 6h). force=true면 무시.
+- 과거 캐시 재사용 금지 조건: SCRAPER_STRICT=true && requested_case 변경 시 무조건 무시.
+
+F) 상태 초기화(프런트)
+- “공고문 불러오기” 클릭 시 parsed/grade/bid 상태 null 초기화.
+- 헤더 배지: 입력 vs 응답 표기. mismatch/error 시 빨간배너 + “강제 새로수집(force)”만 노출, 데이터 카드 비활성.
+
+G) 모크 완전 격리
+- onbid_parser.py의 모든 하드코딩/랜덤 로직 제거.
+- MOCK 응답은 dev 전용 플래그 MOCK_MODE=true에서만 활성, 응답에 mock:true 포함. prod/stg에서는 절대 호출 금지.
+
+H) 로그/가시성
+- logs/onbid_parser.log: {requested_case, case_key, http_status, error_code, mismatch, cache_hit, parse_fields_count} 1라인 JSON.
+- /onbid/raw?case_key=... 로 원문/파싱 결과 다운로드 제공(디버깅 전용).
+
+I) 회귀 테스트(골든세트·자동)
+- tests/smoke_cases.json에 최소 5건 등록(예: 2024-01774-006, 2024-06499-010 등).
+- pytest::test_onbid_parse_strict:
+  - 각 사건 force=true로 호출 → case_no/주소/최저가/차수 필수 필드 존재 + mismatch=false 보장.
+  - 실패 시 stdout에 error_code, 저장된 raw 경로 출력.
+```
+
+\[디버깅 체크리스트(원인별 즉치 조치)]
+
+* \[모크 잔존] `grep -R "mock|rand|부산광역시|해운대|샘플"` → 존재 시 전부 제거.
+* \[케이스키 오염] 요청/응답 로그에 `requested_case, case_key, case_no_extracted` 3값 비교. 하나라도 다르면 **MISMATCH** 강제.
+* \[캐시 충돌] 같은 case\_key에 다건 저장 여부 확인: `ls -al data/cache/onbid:*` → 타 사건 폴더가 섞이면 정규화 실패.
+* \[DOM 변경] 라벨 텍스트 기준 파싱 우선, XPath 2개 백업. 특정 사건에서 field count<8이면 **PARSE\_MISSING\_FIELD**.
+* \[차단·캡차] http\_status 403/302 반복·빈본문 → **STRICT 실패 처리**(배너), 재시도 2회 한정.
+
+\[스모크 테스트(붙여넣기용 커맨드)]
+
+```
+# 성공 케이스(실매물)
+curl -sX POST :8000/api/v1/onbid/parse -H "x-api-key: dev" -H "Content-Type: application/json" \
+ -d '{"case":"2024-01774-006","force":true}' | jq '{req:.requested_case, case:.case_no, addr:.address, min:.min_bid_price, round:.round, mismatch:.mismatch, err:.error_code}'
+
+curl -sX POST :8000/api/v1/onbid/parse -d '{"case":"2024-06499-010","force":true}' -H "x-api-key: dev" -H "Content-Type: application/json" \
+ | jq '{case:.case_no, use:.use_type, addr:.address}'
+
+# 실패/차단 시(STRICT 동작 확인)
+MOCK_MODE=false SCRAPER_STRICT=true curl -sX POST :8000/api/v1/onbid/parse -d '{"case":"2024-12345-001","force":true}' \
+ -H "x-api-key: dev" -H "Content-Type: application/json" | jq '{parsed: .parsed, err:.error_code, hint:.error_hint}'
+```
+
+\[프런트 확인 포인트]
+
+* 입력 직후 **상태 초기화** → parsed 없으면 카드·입찰가 비활성 + 에러배너만.
+* 헤더 배지에 `입력/응답` 표기, 다르면 렌더 금지.
+* STEP2 위험도 카드: flags만 렌더(값 없으면 회색 “불명”).
+
+\[다음 행동]
+
+1. STRICT 모드/정규화/모크격리부터 적용하고 PR(로그 스니펫 포함).
+2. 5건 골든세트로 스모크 자동화 붙여 회귀 방지.
+3. 스테이징에서 사건 2건 캡처+JSON 첨부, mismatch/캐시/배너 동작까지 확인.
+
+\[추가 필요정보]
+
+* 골든세트 사건번호 5건(팀 공유 스샷 포함), 스테이징 IP/RPS 한도, 프런트 배너 문구 선호안.

@@ -1,0 +1,53 @@
+{
+  "url": "https://www.onbid.co.kr/auction/case/WIZARD_TEST_001",
+  "content": "\n            수탁재산 매각 공고\n            사건번호: WIZARD\n            용도: 공장\n            소재지: 인천광역시 남동구 고잔동 456-78\n            감정가: 15억 2000만원\n            최저입찰가: 10억 6400만원 (3회차)\n            토지면적: 2,450.80㎡\n            건물면적: 1,180.20㎡\n            공유지분 1/3 매각\n            유의사항: 환경오염 정화 책임 매수인 부담\n            ",
+  "parsed_data": {
+    "asset_type": "수탁재산",
+    "use_type": "공장",
+    "address": "인천광역시 남동구 고잔동 456-78",
+    "areas": {
+      "building_m2": 1180.2,
+      "land_m2": 2450.8,
+      "land_right": true
+    },
+    "appraisal": 1500000000.0,
+    "min_bid": 1000000000.0,
+    "round": 3,
+    "duty_deadline": null,
+    "pay_due": {
+      "base_days": 30,
+      "grace_days": 10
+    },
+    "notes": "파싱된 공고문 내용",
+    "attachments": [
+      {
+        "name": "감정평가서.pdf",
+        "ext": "pdf"
+      },
+      {
+        "name": "토지대장.pdf",
+        "ext": "pdf"
+      },
+      {
+        "name": "건축물대장.pdf",
+        "ext": "pdf"
+      }
+    ],
+    "saved_attachments": [
+      {
+        "name": "감정평가서.pdf",
+        "saved": "data/raw/216180/attachment_1.pdf"
+      },
+      {
+        "name": "토지대장.pdf",
+        "saved": "data/raw/216180/attachment_2.pdf"
+      },
+      {
+        "name": "건축물대장.pdf",
+        "saved": "data/raw/216180/attachment_3.pdf"
+      }
+    ]
+  },
+  "parsed_at": "2025-08-28T02:24:09.940944",
+  "case_no": "WIZARD"
+}

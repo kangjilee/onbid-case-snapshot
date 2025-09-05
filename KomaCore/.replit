@@ -1,0 +1,74 @@
+modules = ["python-3.11", "nodejs-20", "python3"]
+[agent]
+expertMode = true
+
+[nix]
+channel = "stable-25_05"
+packages = ["libxcrypt", "xcodebuild", "zlib", "jq"]
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "KomaCore Dev All"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "KomaCore Backend"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "KomaCore Frontend"
+
+[[workflows.workflow]]
+name = "KomaCore Dev All"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd komacore-ui && npm run dev:all"
+waitForPort = 5173
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[workflows.workflow]]
+name = "KomaCore Backend"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "uvicorn main:app --host 0.0.0.0 --port 8000"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow]]
+name = "KomaCore Frontend"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd komacore-ui && npm run dev"
+waitForPort = 5173
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[[ports]]
+localPort = 5173
+externalPort = 5173
+
+[[ports]]
+localPort = 8000
+externalPort = 8000

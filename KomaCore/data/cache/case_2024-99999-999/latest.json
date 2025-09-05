@@ -1,0 +1,44 @@
+{
+  "status": "pending",
+  "requested_case": "2024-99999-999",
+  "case_key": "case:2024-99999-999",
+  "case_no": "2024-99999-999",
+  "source_hint": "case",
+  "mismatch": false,
+  "asset_type": null,
+  "use_type": null,
+  "address": null,
+  "areas": {
+    "building_m2": null,
+    "land_m2": null,
+    "land_right": null
+  },
+  "appraisal": null,
+  "min_bid": null,
+  "round": null,
+  "duty_deadline": null,
+  "pay_due": {
+    "base_days": 30,
+    "grace_days": 10
+  },
+  "flags": {
+    "지분": false,
+    "대지권없음": false,
+    "건물만": false,
+    "부가세": false,
+    "특약": false
+  },
+  "attachments": [],
+  "attachment_state": "NONE",
+  "notes": "입찰준비중: 첨부 미게시(정상 케이스일 수 있음)",
+  "extracted_keys": 0,
+  "error_code": "ATTACHMENT_NONE",
+  "error_hint": "첨부 미게시 상태(입찰준비중일 수 있음). 최소정보로 진행합니다.",
+  "debug": {
+    "source": "case",
+    "http_status": 200,
+    "last_url": "https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-99999-999"
+  },
+  "req_id": "08d8eb85-f082-4240-b43f-7786e91bd505",
+  "cached_at": "2025-08-28T05:41:51.600535"
+}

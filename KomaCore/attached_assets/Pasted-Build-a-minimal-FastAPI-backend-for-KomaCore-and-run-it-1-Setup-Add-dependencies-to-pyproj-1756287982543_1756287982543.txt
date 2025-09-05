@@ -1,0 +1,53 @@
+Build a minimal FastAPI backend for “KomaCore” and run it.
+
+1) Setup
+- Add dependencies to pyproject.toml [project].dependencies and install: ["fastapi","uvicorn[standard]","pydantic","python-dotenv"]
+- Create .env with:
+  X_API_KEY=dev
+  DSR_CAP_SALARIED=0.40
+  DSR_CAP_SELFEMP=0.30
+  STRESS_RATE_FLOOR=0.07
+  LTV_CAP_DEFAULT=0.50
+- Set `.replit` exactly to:
+  run = "uv run uvicorn main:app --host 0.0.0.0 --port 8000"
+
+2) Implement `main.py`
+- FastAPI(title="KomaCore", version="0.1")
+- GET /api/v1/healthz -> {"status":"ok"}
+- POST /api/v1/profile
+  Request: job(str), annual_income(int>=0), credit_score(300..1000), existing_debt_principal(int>=0)=0, existing_debt_monthly_payment(int>=0)=0, desired_ltv(0..90)=60, cash_on_hand(int>=0)=0
+  Logic:
+    dsr_cap = DSR_CAP_SALARIED if job in ["직장인","사무직","근로소득"] else DSR_CAP_SELFEMP
+    stress_rate = max(STRESS_RATE_FLOOR, 0.07)
+    annual_repay_capacity = max(0, annual_income*dsr_cap - existing_debt_monthly_payment*12)
+    dsr_limit = annual_repay_capacity / stress_rate if stress_rate>0 else 0
+    credit_adj = clamp((credit_score-700)*0.001, -0.1, 0.1)
+    est_loan_limit = int(max(0, dsr_limit*(1+credit_adj)))
+  Response: {est_loan_limit, cash_cap, assumptions{dsr_cap,stress_rate,credit_adj}, req_id}
+
+- POST /api/v1/analyze
+  Request: asset_class(str), flags_input{is_share_only, has_land_right, building_only, tenant_with_seniority, tax_arrears, special_terms, vat_applicable, occupied, defects} (all bool)
+  Rules:
+    if share_only or !has_land_right or building_only -> risk="risky", note "지분/대지권/건물만"
+    else if asset_class in ["국유재산","수탁재산","신탁공매"] -> risk="conditional", note "경락 아님: VAT/대출/명의제약"
+    else if any of [tenant_with_seniority, tax_arrears, special_terms, vat_applicable, occupied, defects] -> risk="conditional"
+    else -> risk="safe"
+  Response: {risk_level, flags[], notes[], req_id}
+
+- POST /api/v1/bidprice
+  Request: appraisal_price, market_avg_price, expected_monthly_rent, mgmt_cost, vacancy_rate(0..0.5)=0.1, repair_capex, property_tax_est, insurance_est, interest_rate(0..0.25)=0.07, target_roi_base(>0)=0.08, cash_cap, est_loan_limit
+  Constants: LTV_CAP_DEFAULT from env; taxes_fees = bid_price*0.045
+  Functions:
+    simulate(bid): loan=min(est_loan_limit, bid*LTV_CAP_DEFAULT)
+                   total_in = bid + taxes_fees + repair_capex - loan
+                   monthly_net = (rent-mgmt)*(1-vac) - tax/12 - ins/12 - loan*interest/12
+                   annual_roi = (monthly_net*12)/total_in
+    solve_bid_for_roi(target_roi): binary search bid to meet target ROI, then reduce bid until loan<=limit and total_in<=cash_cap
+  Scenarios: ["보수": target_roi_base+0.01, "주력": target_roi_base, "공격": target_roi_base-0.01]
+  Response: {scenarios[{name,bid_price,loan_amount,total_in,monthly_net,annual_roi}], affordable_bid{bid_price,reason[]}, req_id}
+
+- All endpoints use Pydantic models and return JSON; add simple API key check header "x-api-key"==env X_API_KEY (401 otherwise).
+
+3) Run the app now and give me the preview URL.
+I should see Swagger at /docs and 200 OK at /api/v1/healthz with {"status":"ok"}.
+Also provide 3 example curl commands for /profile, /analyze, /bidprice.

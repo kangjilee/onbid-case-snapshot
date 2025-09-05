@@ -1,0 +1,894 @@
+2025-08-28 02:43:14 - INFO - Parse completed - case_no:2024-05180-001, source:case, status:ok, extracted_keys:9, attachment_state:READY, error_code:None
+2025-08-28 02:43:15 - INFO - Input validation failed: INVALID_INPUT - 지원하지 않는 URL 형식입니다.
+2025-08-28 02:43:33 - INFO - Input validation failed: INVALID_INPUT - URL/사건번호 형식이 올바르지 않습니다.
+2025-08-28 02:43:34 - INFO - Input validation failed: INVALID_INPUT - 사건번호 형식이 올바르지 않습니다(예: 2024-05180-001).
+2025-08-28 02:52:16 - INFO - Parse completed - case_no:2024-05180-001, source:case, status:ok, extracted_keys:9, attachment_state:READY, error_code:None
+2025-08-28 02:58:17 - INFO - Parse completed - case_no:2024-05180-001, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 02:58:36 - INFO - Parse completed - case_no:2024-05180-001, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 02:58:38 - INFO - Input validation failed: INVALID_INPUT - 사건번호 형식이 올바르지 않습니다(예: 2024-05180-001).
+2025-08-28 03:00:46 - INFO - Parse completed - case_no:2024-05180-001, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 03:01:10 - INFO - Parse completed - case_no:2024-05180-001, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 03:02:28 - INFO - Parse completed - case_no:2024-01774-006, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 03:02:39 - INFO - Parse completed - case_no:2024-01774-006, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 03:02:56 - INFO - Parse completed - case_no:2024-01774-006, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 03:04:52 - INFO - Parse completed - case_no:2024-01774-006, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 03:04:53 - INFO - Parse completed - case_no:2024-05180-001, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 03:04:55 - INFO - Parse completed - case_no:2024-99999-999, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 03:06:49 - INFO - Parse completed - case_no:2024-01774-006, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 03:06:51 - INFO - Parse completed - case_no:2024-05180-001, source:case, status:ok, extracted_keys:9, attachment_state:READY, error_code:None
+2025-08-28 03:06:52 - INFO - Parse completed - case_no:2024-99999-999, source:case, status:ok, extracted_keys:10, attachment_state:READY, error_code:None
+2025-08-28 03:07:58 - INFO - Parse completed - case_no:2024-01774-006, source:case, status:ok, extracted_keys:10, attachment_state:READY, error_code:None
+2025-08-28 03:10:06 - INFO - Parse completed - case_no:2024-01774-006, source:case, status:ok, extracted_keys:10, attachment_state:READY, error_code:None
+2025-08-28 03:11:15 - INFO - Parse completed - case_no:2024-01774-006, source:case, status:ok, extracted_keys:10, attachment_state:READY, error_code:None
+2025-08-28 03:13:01 - INFO - Parse completed - case_no:2024-05180-001, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 03:19:23 - INFO - Using cached data for case_key: 2024-01774-006
+2025-08-28 03:19:23 - INFO - Parse completed - case_key:2024-01774-006, source:case, status:ok, extracted_keys:10, attachment_state:READY, error_code:None
+2025-08-28 03:22:23 - INFO - Using cached data for case_key: 2024-01774-006
+2025-08-28 03:22:23 - INFO - Parse completed - case_key:2024-01774-006, source:case, status:ok, extracted_keys:10, attachment_state:READY, error_code:None
+2025-08-28 03:22:23 - INFO - Parse completed - case_key:2024-01774-007, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 03:22:24 - WARNING - Content fetch failed: REMOTE_HTTP_404
+2025-08-28 03:22:39 - INFO - Using cached data for case_key: 2024-01774-006
+2025-08-28 03:22:39 - INFO - Parse completed - case_key:2024-01774-006, source:case, status:ok, extracted_keys:10, attachment_state:READY, error_code:None
+2025-08-28 03:22:39 - INFO - Using cached data for case_key: 2024-01774-007
+2025-08-28 03:22:39 - INFO - Parse completed - case_key:2024-01774-007, source:case, status:ok, extracted_keys:10, attachment_state:READY, error_code:None
+2025-08-28 03:23:02 - INFO - Parse completed - case_key:2024-01774-009, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 03:25:19 - INFO - Using cached data for case_key: 2024-01774-006
+2025-08-28 03:25:19 - INFO - Parse completed - case_key:2024-01774-006, source:case, status:ok, extracted_keys:9, attachment_state:READY, error_code:None
+2025-08-28 03:37:19 - WARNING - Content fetch failed: REMOTE_HTTP_404
+2025-08-28 03:37:50 - INFO - Using cached data for case_key: 2024-01774-006
+2025-08-28 03:37:50 - INFO - Parse completed - case_key:2024-01774-006, source:case, status:ok, extracted_keys:9, attachment_state:READY, error_code:None
+2025-08-28 03:37:55 - INFO - Using cached data for case_key: 2024-05180-001
+2025-08-28 03:37:55 - INFO - Parse completed - case_key:2024-05180-001, source:case, status:ok, extracted_keys:10, attachment_state:READY, error_code:None
+2025-08-28 03:51:48 - INFO - Detected text content, using mock parser
+2025-08-28 03:51:48 - INFO - Parse completed - case_key:case:2024-05180-001, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 03:51:52 - INFO - Random sleep: 0.85s
+2025-08-28 03:51:53 - INFO - Fetching https://www.onbid.co.kr/auction/case/onbid:12345 (attempt 1/3)
+2025-08-28 03:51:53 - WARNING - Content fetch failed: REMOTE_HTTP_404
+2025-08-28 03:53:20 - INFO - Detected text content, using mock parser
+2025-08-28 03:53:20 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:9, attachment_state:READY, error_code:None
+2025-08-28 03:53:55 - INFO - Using cached data for case_key: case:2024-01774-006
+2025-08-28 03:53:55 - INFO - Detected text content, using mock parser
+2025-08-28 03:53:55 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:9, attachment_state:READY, error_code:None
+2025-08-28 03:57:51 - INFO - Detected text content, using mock parser
+2025-08-28 03:57:51 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:9, attachment_state:READY, error_code:None
+2025-08-28 03:57:51 - ERROR - Unexpected error in parse_onbid_case: cannot access local variable 'last_url' where it is not associated with a value
+2025-08-28 03:59:01 - INFO - Detected text content, using mock parser
+2025-08-28 03:59:01 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:9, attachment_state:READY, error_code:None
+2025-08-28 03:59:01 - ERROR - Unexpected error in parse_onbid_case: cannot access local variable 'last_url' where it is not associated with a value
+2025-08-28 03:59:18 - ERROR - Unexpected error in parse_onbid_case: cannot access local variable 'content' where it is not associated with a value
+2025-08-28 04:00:16 - ERROR - Unexpected error in parse_onbid_case: cannot access local variable 'content' where it is not associated with a value
+2025-08-28 04:00:16 - INFO - Parse request 4ad6d0e3-38e0-4366-b849-c61d36414223 completed (active: -1)
+2025-08-28 04:00:43 - ERROR - Unexpected error in parse_onbid_case: cannot access local variable 'content' where it is not associated with a value
+2025-08-28 04:00:43 - INFO - Parse request 0b8cb9e8-0184-4104-bff4-28794984c770 completed (active: -2)
+2025-08-28 04:00:55 - ERROR - Unexpected error in parse_onbid_case: cannot access local variable 'content' where it is not associated with a value
+2025-08-28 04:00:55 - INFO - Parse request 09ce8083-da32-4b74-8773-dfe5ecabfd1d completed (active: -3)
+2025-08-28 04:01:10 - ERROR - Unexpected error in parse_onbid_case: cannot access local variable 'content' where it is not associated with a value
+2025-08-28 04:01:10 - INFO - Parse request a351b315-d898-44fc-bc67-6ee0cb050dda completed (active: -4)
+2025-08-28 04:02:17 - ERROR - Unexpected error in parse_onbid_case: cannot access local variable 'content' where it is not associated with a value
+2025-08-28 04:02:17 - INFO - Parse request c09383da-97ad-4038-b515-ee933ac8d038 completed (active: -5)
+2025-08-28 04:03:06 - INFO - Trying real search URL: https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-006
+2025-08-28 04:03:06 - INFO - Random sleep: 1.41s
+2025-08-28 04:03:08 - INFO - Fetching https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:03:09 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-006: REMOTE_HTTP_404
+2025-08-28 04:03:09 - INFO - Trying real search URL: https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-006
+2025-08-28 04:03:09 - INFO - Rate limiting: sleeping 1.31s
+2025-08-28 04:03:10 - INFO - Fetching https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-006 (attempt 1/3)
+2025-08-28 04:03:10 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-006: REMOTE_HTTP_404
+2025-08-28 04:03:10 - INFO - Trying real search URL: https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-006
+2025-08-28 04:03:10 - INFO - Rate limiting: sleeping 1.63s
+2025-08-28 04:03:12 - INFO - Fetching https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:03:12 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-006: REMOTE_HTTP_404
+2025-08-28 04:03:12 - WARNING - All real URLs failed for case 2024-01774-006, using mock as fallback
+2025-08-28 04:03:12 - INFO - Detected text content, using mock parser
+2025-08-28 04:03:12 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:9, attachment_state:READY, error_code:None
+2025-08-28 04:03:12 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 04:03:12 - INFO - Parse request 0cef43df-e77d-4a90-bc11-09e796020238 completed (active: -1)
+2025-08-28 04:04:17 - INFO - Using cached data for case_key: case:2024-05180-001
+2025-08-28 04:04:17 - INFO - Trying real search URL: https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-05180-001
+2025-08-28 04:04:17 - INFO - Random sleep: 1.12s
+2025-08-28 04:04:18 - INFO - Fetching https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-05180-001 (attempt 1/3)
+2025-08-28 04:04:19 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-05180-001: REMOTE_HTTP_404
+2025-08-28 04:04:19 - INFO - Trying real search URL: https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-05180-001
+2025-08-28 04:04:19 - INFO - Rate limiting: sleeping 1.59s
+2025-08-28 04:04:21 - INFO - Fetching https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-05180-001 (attempt 1/3)
+2025-08-28 04:04:21 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-05180-001: REMOTE_HTTP_404
+2025-08-28 04:04:21 - INFO - Trying real search URL: https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-05180-001
+2025-08-28 04:04:21 - INFO - Rate limiting: sleeping 1.80s
+2025-08-28 04:04:23 - INFO - Fetching https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-05180-001 (attempt 1/3)
+2025-08-28 04:04:23 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-05180-001: REMOTE_HTTP_404
+2025-08-28 04:04:23 - WARNING - All real URLs failed for case 2024-05180-001, using mock as fallback
+2025-08-28 04:04:23 - INFO - Detected text content, using mock parser
+2025-08-28 04:04:23 - INFO - Parse completed - case_key:case:2024-05180-001, source:case, status:ok, extracted_keys:9, attachment_state:READY, error_code:None
+2025-08-28 04:04:23 - INFO - Saved to cache: case:2024-05180-001
+2025-08-28 04:04:23 - INFO - Parse request 1deb74fb-5307-47df-be62-ffa6d528e609 completed (active: -1)
+2025-08-28 04:05:13 - INFO - Input validation failed: INVALID_INPUT - 2024-01774-006 
+2025-08-28 04:05:13 - INFO - Parse request af5e8979-c757-4c25-9da2-8e1274920165 completed (active: -2)
+2025-08-28 04:05:23 - INFO - Using cached data for case_key: case:2024-01774-006
+2025-08-28 04:05:23 - INFO - Trying real search URL: https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-006
+2025-08-28 04:05:23 - INFO - Random sleep: 0.98s
+2025-08-28 04:05:24 - INFO - Fetching https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:05:25 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-006: REMOTE_HTTP_404
+2025-08-28 04:05:25 - INFO - Trying real search URL: https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-006
+2025-08-28 04:05:25 - INFO - Random sleep: 1.43s
+2025-08-28 04:05:26 - INFO - Fetching https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-006 (attempt 1/3)
+2025-08-28 04:05:26 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-006: REMOTE_HTTP_404
+2025-08-28 04:05:26 - INFO - Trying real search URL: https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-006
+2025-08-28 04:05:26 - INFO - Rate limiting: sleeping 1.66s
+2025-08-28 04:05:28 - INFO - Fetching https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:05:28 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-006: REMOTE_HTTP_404
+2025-08-28 04:05:28 - WARNING - All real URLs failed for case 2024-01774-006, using mock as fallback
+2025-08-28 04:05:28 - INFO - Detected text content, using mock parser
+2025-08-28 04:05:28 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:05:28 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 04:05:28 - INFO - Parse request 8bfbe356-ad16-4858-b015-a40097e2b36d completed (active: -3)
+2025-08-28 04:07:12 - INFO - Using cached data for case_key: case:2024-01774-006
+2025-08-28 04:07:12 - INFO - Trying real search URL: https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-006
+2025-08-28 04:07:12 - INFO - Random sleep: 0.90s
+2025-08-28 04:07:13 - INFO - Fetching https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:07:13 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-006: REMOTE_HTTP_404
+2025-08-28 04:07:13 - INFO - Trying real search URL: https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-006
+2025-08-28 04:07:13 - INFO - Rate limiting: sleeping 1.67s
+2025-08-28 04:07:15 - INFO - Fetching https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-006 (attempt 1/3)
+2025-08-28 04:07:15 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-006: REMOTE_HTTP_404
+2025-08-28 04:07:15 - INFO - Trying real search URL: https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-006
+2025-08-28 04:07:15 - INFO - Rate limiting: sleeping 1.97s
+2025-08-28 04:07:17 - INFO - Fetching https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:07:17 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-006: REMOTE_HTTP_404
+2025-08-28 04:07:17 - WARNING - All real URLs failed for case 2024-01774-006, using mock as fallback
+2025-08-28 04:07:17 - INFO - Detected text content, using mock parser
+2025-08-28 04:07:17 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:07:17 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 04:07:17 - INFO - Parse request 063fc3d6-f91f-4f0e-97ce-c6b31f2bf36f completed (active: -4)
+2025-08-28 04:11:42 - INFO - Trying real search URL: https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-006
+2025-08-28 04:11:42 - INFO - Random sleep: 0.84s
+2025-08-28 04:11:43 - INFO - Fetching https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:11:44 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-006: REMOTE_HTTP_404
+2025-08-28 04:11:44 - INFO - Trying real search URL: https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-006
+2025-08-28 04:11:44 - INFO - Rate limiting: sleeping 1.46s
+2025-08-28 04:11:45 - INFO - Fetching https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-006 (attempt 1/3)
+2025-08-28 04:11:45 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-006: REMOTE_HTTP_404
+2025-08-28 04:11:45 - INFO - Trying real search URL: https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-006
+2025-08-28 04:11:45 - INFO - Rate limiting: sleeping 2.07s
+2025-08-28 04:11:47 - INFO - Fetching https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:11:48 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-006: REMOTE_HTTP_404
+2025-08-28 04:11:48 - WARNING - All real URLs failed for case 2024-01774-006, using mock as fallback
+2025-08-28 04:11:48 - INFO - Detected text content, using mock parser
+2025-08-28 04:11:48 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:11:48 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 04:11:48 - INFO - Parse request 19b4f5e2-76e0-4421-94b0-2fc50094578f completed (active: -5)
+2025-08-28 04:11:48 - INFO - Trying real search URL: https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-007
+2025-08-28 04:11:48 - INFO - Rate limiting: sleeping 1.66s
+2025-08-28 04:11:50 - INFO - Fetching https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-007 (attempt 1/3)
+2025-08-28 04:11:50 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-007: REMOTE_HTTP_404
+2025-08-28 04:11:50 - INFO - Trying real search URL: https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-007
+2025-08-28 04:11:50 - INFO - Rate limiting: sleeping 2.10s
+2025-08-28 04:11:52 - INFO - Fetching https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-007 (attempt 1/3)
+2025-08-28 04:11:52 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-007: REMOTE_HTTP_404
+2025-08-28 04:11:52 - INFO - Trying real search URL: https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-007
+2025-08-28 04:11:52 - INFO - Rate limiting: sleeping 1.69s
+2025-08-28 04:11:54 - INFO - Fetching https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-007 (attempt 1/3)
+2025-08-28 04:11:54 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-007: REMOTE_HTTP_404
+2025-08-28 04:11:54 - WARNING - All real URLs failed for case 2024-01774-007, using mock as fallback
+2025-08-28 04:11:54 - INFO - Detected text content, using mock parser
+2025-08-28 04:11:54 - INFO - Parse completed - case_key:case:2024-01774-007, source:case, status:ok, extracted_keys:9, attachment_state:READY, error_code:None
+2025-08-28 04:11:54 - INFO - Saved to cache: case:2024-01774-007
+2025-08-28 04:11:54 - INFO - Parse request 1177ef5f-c970-4200-9975-ae58a47f77d8 completed (active: -6)
+2025-08-28 04:11:54 - INFO - Trying real search URL: https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-008
+2025-08-28 04:11:54 - INFO - Rate limiting: sleeping 1.60s
+2025-08-28 04:11:56 - INFO - Fetching https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-008 (attempt 1/3)
+2025-08-28 04:11:56 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-008: REMOTE_HTTP_404
+2025-08-28 04:11:56 - INFO - Trying real search URL: https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-008
+2025-08-28 04:11:56 - INFO - Rate limiting: sleeping 1.70s
+2025-08-28 04:11:58 - INFO - Fetching https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-008 (attempt 1/3)
+2025-08-28 04:11:58 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-008: REMOTE_HTTP_404
+2025-08-28 04:11:58 - INFO - Trying real search URL: https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-008
+2025-08-28 04:11:58 - INFO - Rate limiting: sleeping 1.99s
+2025-08-28 04:12:00 - INFO - Fetching https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-008 (attempt 1/3)
+2025-08-28 04:12:00 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-008: REMOTE_HTTP_404
+2025-08-28 04:12:00 - WARNING - All real URLs failed for case 2024-01774-008, using mock as fallback
+2025-08-28 04:12:00 - INFO - Detected text content, using mock parser
+2025-08-28 04:12:00 - INFO - Parse completed - case_key:case:2024-01774-008, source:case, status:ok, extracted_keys:9, attachment_state:READY, error_code:None
+2025-08-28 04:12:00 - INFO - Saved to cache: case:2024-01774-008
+2025-08-28 04:12:00 - INFO - Parse request 579a14ee-ac06-42cc-98da-3618e785aca8 completed (active: -7)
+2025-08-28 04:12:01 - INFO - Trying real search URL: https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-009
+2025-08-28 04:12:01 - INFO - Rate limiting: sleeping 1.88s
+2025-08-28 04:12:02 - INFO - Fetching https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-009 (attempt 1/3)
+2025-08-28 04:12:03 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?keyword=2024-01774-009: REMOTE_HTTP_404
+2025-08-28 04:12:03 - INFO - Trying real search URL: https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-009
+2025-08-28 04:12:03 - INFO - Rate limiting: sleeping 2.10s
+2025-08-28 04:12:05 - INFO - Fetching https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-009 (attempt 1/3)
+2025-08-28 04:12:05 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/cta/cltr/cltrSearch.do?caseNo=2024-01774-009: REMOTE_HTTP_404
+2025-08-28 04:12:05 - INFO - Trying real search URL: https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-009
+2025-08-28 04:12:05 - INFO - Rate limiting: sleeping 1.95s
+2025-08-28 04:12:07 - INFO - Fetching https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-009 (attempt 1/3)
+2025-08-28 04:12:07 - WARNING - Failed to fetch from https://www.onbid.co.kr/op/search/searchIntegral.do?keyword=2024-01774-009: REMOTE_HTTP_404
+2025-08-28 04:12:07 - WARNING - All real URLs failed for case 2024-01774-009, using mock as fallback
+2025-08-28 04:12:07 - INFO - Detected text content, using mock parser
+2025-08-28 04:12:07 - INFO - Parse completed - case_key:case:2024-01774-009, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:12:07 - INFO - Saved to cache: case:2024-01774-009
+2025-08-28 04:12:07 - INFO - Parse request 572d6f25-1601-425a-ab84-2e69f462305a completed (active: -8)
+2025-08-28 04:13:03 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:13:03 - INFO - Random sleep: 1.05s
+2025-08-28 04:13:04 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:13:06 - INFO - Successfully fetched 160217 chars
+2025-08-28 04:13:06 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:13:06 - INFO - Detected HTML content, using real parser
+2025-08-28 04:13:06 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:pending, extracted_keys:5, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:13:06 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 04:13:06 - INFO - Parse request cd41001c-3e2a-4ac5-984c-020bfde5aa4b completed (active: -1)
+2025-08-28 04:13:07 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-010
+2025-08-28 04:13:07 - INFO - Random sleep: 1.08s
+2025-08-28 04:13:08 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-010 (attempt 1/3)
+2025-08-28 04:13:09 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:13:09 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-010
+2025-08-28 04:13:09 - INFO - Detected HTML content, using real parser
+2025-08-28 04:13:09 - INFO - Parse completed - case_key:case:2024-01774-010, source:case, status:pending, extracted_keys:5, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:13:09 - INFO - Saved to cache: case:2024-01774-010
+2025-08-28 04:13:09 - INFO - Parse request cadf0175-c217-4281-9efe-568e0b9a1570 completed (active: -2)
+2025-08-28 04:13:09 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-011
+2025-08-28 04:13:09 - INFO - Rate limiting: sleeping 1.21s
+2025-08-28 04:13:10 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-011 (attempt 1/3)
+2025-08-28 04:13:11 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:13:11 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-011
+2025-08-28 04:13:11 - INFO - Detected HTML content, using real parser
+2025-08-28 04:13:11 - INFO - Parse completed - case_key:case:2024-01774-011, source:case, status:pending, extracted_keys:5, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:13:11 - INFO - Saved to cache: case:2024-01774-011
+2025-08-28 04:13:11 - INFO - Parse request dd33ac46-8cd6-449b-b12b-b130e9a3c2fc completed (active: -3)
+2025-08-28 04:13:33 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-99999-999
+2025-08-28 04:13:33 - INFO - Random sleep: 1.36s
+2025-08-28 04:13:34 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-99999-999 (attempt 1/3)
+2025-08-28 04:13:35 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:13:35 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-99999-999
+2025-08-28 04:13:35 - INFO - Detected HTML content, using real parser
+2025-08-28 04:13:35 - INFO - Parse completed - case_key:case:2024-99999-999, source:case, status:pending, extracted_keys:5, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:13:35 - INFO - Saved to cache: case:2024-99999-999
+2025-08-28 04:13:35 - INFO - Parse request 6718b486-8b36-4b41-a64c-b43e7fc0a01a completed (active: -4)
+2025-08-28 04:13:35 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-12345-001
+2025-08-28 04:13:35 - INFO - Rate limiting: sleeping 1.70s
+2025-08-28 04:13:37 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-12345-001 (attempt 1/3)
+2025-08-28 04:13:37 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:13:37 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-12345-001
+2025-08-28 04:13:37 - INFO - Detected HTML content, using real parser
+2025-08-28 04:13:37 - INFO - Parse completed - case_key:case:2024-12345-001, source:case, status:pending, extracted_keys:5, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:13:37 - INFO - Saved to cache: case:2024-12345-001
+2025-08-28 04:13:37 - INFO - Parse request 63629e1e-1e93-41c7-8020-6b4cafc57c35 completed (active: -5)
+2025-08-28 04:13:38 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-12345-002
+2025-08-28 04:13:38 - INFO - Rate limiting: sleeping 1.24s
+2025-08-28 04:13:39 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-12345-002 (attempt 1/3)
+2025-08-28 04:13:39 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:13:39 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-12345-002
+2025-08-28 04:13:39 - INFO - Detected HTML content, using real parser
+2025-08-28 04:13:39 - INFO - Parse completed - case_key:case:2024-12345-002, source:case, status:pending, extracted_keys:5, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:13:39 - INFO - Saved to cache: case:2024-12345-002
+2025-08-28 04:13:39 - INFO - Parse request b1261a8f-da6b-419f-942d-358f7d3a4f0a completed (active: -6)
+2025-08-28 04:14:56 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:14:56 - INFO - Random sleep: 0.91s
+2025-08-28 04:14:57 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:14:59 - INFO - Successfully fetched 160217 chars
+2025-08-28 04:14:59 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:14:59 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:14:59 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:10, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:14:59 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 04:14:59 - INFO - Parse request 3bdee0bc-b222-4375-b5ac-4c0fb2afac88 completed (active: -1)
+2025-08-28 04:14:59 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-007
+2025-08-28 04:14:59 - INFO - Random sleep: 1.45s
+2025-08-28 04:15:00 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-007 (attempt 1/3)
+2025-08-28 04:15:01 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:15:01 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-007
+2025-08-28 04:15:01 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:15:01 - INFO - Parse completed - case_key:case:2024-01774-007, source:case, status:ok, extracted_keys:9, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:15:01 - INFO - Saved to cache: case:2024-01774-007
+2025-08-28 04:15:01 - INFO - Parse request aefca29e-38b3-4770-8fc9-5edf24de75df completed (active: -2)
+2025-08-28 04:15:01 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-008
+2025-08-28 04:15:01 - INFO - Rate limiting: sleeping 1.29s
+2025-08-28 04:15:02 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-008 (attempt 1/3)
+2025-08-28 04:15:03 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:15:03 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-008
+2025-08-28 04:15:03 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:15:03 - INFO - Parse completed - case_key:case:2024-01774-008, source:case, status:ok, extracted_keys:10, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:15:03 - INFO - Saved to cache: case:2024-01774-008
+2025-08-28 04:15:03 - INFO - Parse request b391553c-622d-4be4-8c28-1a45bca8f8ef completed (active: -3)
+2025-08-28 04:15:03 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-009
+2025-08-28 04:15:03 - INFO - Rate limiting: sleeping 1.44s
+2025-08-28 04:15:05 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-009 (attempt 1/3)
+2025-08-28 04:15:05 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:15:05 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-009
+2025-08-28 04:15:05 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:15:05 - INFO - Parse completed - case_key:case:2024-01774-009, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:15:05 - INFO - Saved to cache: case:2024-01774-009
+2025-08-28 04:15:05 - INFO - Parse request 62713663-1d64-467b-809f-a33c9c7b5a30 completed (active: -4)
+2025-08-28 04:16:37 - INFO - Using cached data for case_key: case:2024-01774-006
+2025-08-28 04:16:37 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:16:37 - INFO - Random sleep: 1.35s
+2025-08-28 04:16:38 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:16:40 - INFO - Successfully fetched 160217 chars
+2025-08-28 04:16:40 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:16:40 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:16:40 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:10, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:16:40 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 04:16:40 - INFO - Parse request 12833985-89d2-4f06-a4b7-6d9e4ea9fcc7 completed (active: -1)
+2025-08-28 04:17:16 - INFO - Using cached data for case_key: case:2024-01774-007
+2025-08-28 04:17:16 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-007
+2025-08-28 04:17:16 - INFO - Random sleep: 0.99s
+2025-08-28 04:17:17 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-007 (attempt 1/3)
+2025-08-28 04:17:18 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:17:18 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-007
+2025-08-28 04:17:18 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:17:18 - INFO - Parse completed - case_key:case:2024-01774-007, source:case, status:ok, extracted_keys:9, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:17:18 - INFO - Saved to cache: case:2024-01774-007
+2025-08-28 04:17:18 - INFO - Parse request 76e73a8e-7ecf-4dec-9502-5dcd25812c2a completed (active: -2)
+2025-08-28 04:25:30 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:25:30 - INFO - Random sleep: 0.95s
+2025-08-28 04:25:31 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:25:32 - INFO - Successfully fetched 160217 chars
+2025-08-28 04:25:32 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:25:32 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:25:32 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:10, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:25:32 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 04:25:32 - INFO - Parse request b129a21f-d1be-4780-b577-705aed26e22c completed (active: -1)
+2025-08-28 04:25:33 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-007
+2025-08-28 04:25:33 - INFO - Random sleep: 1.32s
+2025-08-28 04:25:34 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-007 (attempt 1/3)
+2025-08-28 04:25:35 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:25:35 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-007
+2025-08-28 04:25:35 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:25:35 - INFO - Parse completed - case_key:case:2024-01774-007, source:case, status:ok, extracted_keys:9, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:25:35 - INFO - Saved to cache: case:2024-01774-007
+2025-08-28 04:25:35 - INFO - Parse request 2d9b2c7e-a657-4e6f-abcf-b9ed2420d6ea completed (active: -2)
+2025-08-28 04:26:36 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:26:36 - INFO - Random sleep: 1.04s
+2025-08-28 04:26:37 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:26:38 - INFO - Successfully fetched 160217 chars
+2025-08-28 04:26:38 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:26:38 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:26:38 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:9, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:26:38 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 04:26:38 - INFO - Parse request 032a50ca-b4e6-4f51-aa57-adf41620fb77 completed (active: -1)
+2025-08-28 04:26:38 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-007
+2025-08-28 04:26:38 - INFO - Random sleep: 0.81s
+2025-08-28 04:26:39 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-007 (attempt 1/3)
+2025-08-28 04:26:40 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:26:40 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-007
+2025-08-28 04:26:40 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:26:40 - INFO - Parse completed - case_key:case:2024-01774-007, source:case, status:pending, extracted_keys:1, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:26:40 - INFO - Saved to cache: case:2024-01774-007
+2025-08-28 04:26:40 - INFO - Parse request 29c78dea-ddb8-4fdd-9493-a1666a297ffb completed (active: -2)
+2025-08-28 04:27:55 - INFO - Using cached data for case_key: case:2024-01774-006
+2025-08-28 04:27:55 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:27:55 - INFO - Random sleep: 1.34s
+2025-08-28 04:27:56 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:27:59 - INFO - Successfully fetched 160217 chars
+2025-08-28 04:27:59 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:27:59 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:27:59 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:9, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:27:59 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 04:27:59 - INFO - Parse request fddc24bf-7b59-4529-9566-ae977398eb4c completed (active: -1)
+2025-08-28 04:29:07 - INFO - Using cached data for case_key: case:2024-01774-007
+2025-08-28 04:29:07 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-007
+2025-08-28 04:29:07 - INFO - Random sleep: 1.04s
+2025-08-28 04:29:08 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-007 (attempt 1/3)
+2025-08-28 04:29:09 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:29:09 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-007
+2025-08-28 04:29:09 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:29:09 - INFO - Parse completed - case_key:case:2024-01774-007, source:case, status:pending, extracted_keys:1, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:29:09 - INFO - Saved to cache: case:2024-01774-007
+2025-08-28 04:29:09 - INFO - Parse request 7010d170-a510-4573-a998-3ca355556f04 completed (active: -2)
+2025-08-28 04:29:21 - INFO - Using cached data for case_key: case:2024-01774-006
+2025-08-28 04:29:21 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:29:21 - INFO - Random sleep: 1.05s
+2025-08-28 04:29:22 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:29:23 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:29:23 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:29:23 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:29:23 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:9, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:29:23 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 04:29:23 - INFO - Parse request 9651132b-3920-4c90-a826-35db6617912d completed (active: -3)
+2025-08-28 04:30:44 - INFO - Using cached data for case_key: case:2024-05180-001
+2025-08-28 04:30:44 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-05180-001
+2025-08-28 04:30:44 - INFO - Random sleep: 0.94s
+2025-08-28 04:30:45 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-05180-001 (attempt 1/3)
+2025-08-28 04:30:47 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:30:47 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-05180-001
+2025-08-28 04:30:47 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:30:47 - INFO - Parse completed - case_key:case:2024-05180-001, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:30:47 - INFO - Saved to cache: case:2024-05180-001
+2025-08-28 04:30:47 - INFO - Parse request 4e62be88-bb9c-483d-ab97-1940e5d7e847 completed (active: -4)
+2025-08-28 04:32:34 - INFO - Using cached data for case_key: case:2024-01774-006
+2025-08-28 04:32:34 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:32:34 - INFO - Random sleep: 1.26s
+2025-08-28 04:32:35 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:32:37 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:32:37 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:32:37 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:32:37 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:9, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:32:37 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 04:32:37 - INFO - Parse request f894302e-4b25-47ba-8390-5aad44ce0bb7 completed (active: -5)
+2025-08-28 04:35:54 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:35:54 - INFO - Random sleep: 1.26s
+2025-08-28 04:35:55 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:35:57 - INFO - Successfully fetched 160217 chars
+2025-08-28 04:35:57 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:35:57 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:35:57 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:8, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:35:57 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 04:35:57 - INFO - Parse request b8d631f8-e06e-4055-8b7d-a60933ba9acd completed (active: -1)
+2025-08-28 04:35:57 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-05180-001
+2025-08-28 04:35:57 - INFO - Random sleep: 1.25s
+2025-08-28 04:35:58 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-05180-001 (attempt 1/3)
+2025-08-28 04:35:59 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:35:59 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-05180-001
+2025-08-28 04:35:59 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:35:59 - INFO - Parse completed - case_key:case:2024-05180-001, source:case, status:ok, extracted_keys:9, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:35:59 - INFO - Saved to cache: case:2024-05180-001
+2025-08-28 04:35:59 - INFO - Parse request f872ebfc-5e5e-4c20-b29e-fcec6f712749 completed (active: -2)
+2025-08-28 04:37:08 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:37:08 - INFO - Random sleep: 1.02s
+2025-08-28 04:37:09 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:37:11 - INFO - Successfully fetched 160217 chars
+2025-08-28 04:37:11 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:37:11 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:37:11 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:9, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:37:11 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 04:37:11 - INFO - Parse request 58de5c34-2ca5-42b6-a0f0-d9d406b3dbc7 completed (active: -1)
+2025-08-28 04:37:11 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-05180-001
+2025-08-28 04:37:11 - INFO - Random sleep: 0.89s
+2025-08-28 04:37:12 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-05180-001 (attempt 1/3)
+2025-08-28 04:37:12 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:37:12 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-05180-001
+2025-08-28 04:37:12 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:37:12 - INFO - Parse completed - case_key:case:2024-05180-001, source:case, status:ok, extracted_keys:9, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:37:12 - INFO - Saved to cache: case:2024-05180-001
+2025-08-28 04:37:12 - INFO - Parse request c6d359eb-d828-41d1-9118-daa8924a9e46 completed (active: -2)
+2025-08-28 04:37:39 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:37:39 - INFO - Random sleep: 1.38s
+2025-08-28 04:37:41 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:37:42 - INFO - Successfully fetched 160217 chars
+2025-08-28 04:37:42 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:37:42 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:37:42 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:10, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:37:42 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 04:37:42 - INFO - Parse request e30b071c-b291-47b2-b9d8-d44e1fdfd465 completed (active: -1)
+2025-08-28 04:37:43 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-05180-001
+2025-08-28 04:37:43 - INFO - Random sleep: 1.12s
+2025-08-28 04:37:44 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-05180-001 (attempt 1/3)
+2025-08-28 04:37:44 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:37:44 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-05180-001
+2025-08-28 04:37:44 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:37:44 - INFO - Parse completed - case_key:case:2024-05180-001, source:case, status:ok, extracted_keys:10, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:37:44 - INFO - Saved to cache: case:2024-05180-001
+2025-08-28 04:37:44 - INFO - Parse request f8895fe1-63ac-4004-ad3e-cf9eda5424fa completed (active: -2)
+2025-08-28 04:43:21 - INFO - Using cached data for case_key: case:2024-01774-006
+2025-08-28 04:43:21 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:43:21 - INFO - Random sleep: 1.27s
+2025-08-28 04:43:22 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:43:24 - INFO - Successfully fetched 160217 chars
+2025-08-28 04:43:24 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:43:24 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:43:24 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:10, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:43:24 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 04:43:24 - INFO - Parse request d321bb2b-7395-4e1d-b727-7f873393af1e completed (active: -1)
+2025-08-28 04:43:35 - INFO - Using cached data for case_key: case:2024-05180-001
+2025-08-28 04:43:35 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-05180-001
+2025-08-28 04:43:35 - INFO - Random sleep: 1.39s
+2025-08-28 04:43:36 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-05180-001 (attempt 1/3)
+2025-08-28 04:43:37 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:43:37 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-05180-001
+2025-08-28 04:43:37 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:43:37 - INFO - Parse completed - case_key:case:2024-05180-001, source:case, status:ok, extracted_keys:10, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:43:37 - INFO - Saved to cache: case:2024-05180-001
+2025-08-28 04:43:37 - INFO - Parse request 7bca93e6-3add-48ff-9794-19f2e48def24 completed (active: -2)
+2025-08-28 04:44:01 - INFO - Input validation failed: INVALID_INPUT - 2025-0500-033951
+2025-08-28 04:44:01 - INFO - Parse request fd09c4b3-6937-4438-9dc5-adb91125f2ba completed (active: -3)
+2025-08-28 04:44:09 - INFO - Input validation failed: INVALID_INPUT - 2025-0500-033951
+2025-08-28 04:44:09 - INFO - Parse request 2405c0b6-c3d7-4454-8bea-8aca79f3c59e completed (active: -4)
+2025-08-28 04:44:36 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-00602-001
+2025-08-28 04:44:36 - INFO - Random sleep: 1.47s
+2025-08-28 04:44:38 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-00602-001 (attempt 1/3)
+2025-08-28 04:44:40 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:44:40 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-00602-001
+2025-08-28 04:44:40 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:44:40 - INFO - Parse completed - case_key:case:2024-00602-001, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:44:40 - INFO - Saved to cache: case:2024-00602-001
+2025-08-28 04:44:40 - INFO - Parse request 7aedf561-6e38-4b67-82c9-fc8802e15015 completed (active: -5)
+2025-08-28 04:47:45 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:47:45 - INFO - Random sleep: 1.34s
+2025-08-28 04:47:46 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:47:48 - INFO - Successfully fetched 160217 chars
+2025-08-28 04:47:48 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:47:48 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:47:48 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:10, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:47:48 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 04:47:48 - INFO - Parse request ce790ddc-7c66-497d-abf5-7916463e3cfa completed (active: -1)
+2025-08-28 04:48:14 - INFO - Input validation failed: INVALID_INPUT -  2024-01774-006
+2025-08-28 04:48:14 - INFO - Parse request 14305e51-4b19-43f1-bcd4-da7e84ec3642 completed (active: -2)
+2025-08-28 04:48:20 - INFO - Using cached data for case_key: case:2024-01774-006
+2025-08-28 04:48:20 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:48:20 - INFO - Random sleep: 1.31s
+2025-08-28 04:48:21 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:48:22 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:48:22 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:48:22 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:48:22 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:10, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:48:22 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 04:48:22 - INFO - Parse request f645b8cd-a2c0-48db-9fb6-c2cdd36e2e5a completed (active: -3)
+2025-08-28 04:48:41 - INFO - Using cached data for case_key: case:2024-00602-001
+2025-08-28 04:48:41 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-00602-001
+2025-08-28 04:48:41 - INFO - Random sleep: 0.82s
+2025-08-28 04:48:42 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-00602-001 (attempt 1/3)
+2025-08-28 04:48:43 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:48:43 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-00602-001
+2025-08-28 04:48:43 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:48:43 - INFO - Parse completed - case_key:case:2024-00602-001, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:48:43 - INFO - Saved to cache: case:2024-00602-001
+2025-08-28 04:48:43 - INFO - Parse request 14aa0d08-8ca7-4bb7-963b-19fe72de2bd4 completed (active: -4)
+2025-08-28 04:49:33 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 04:49:33 - INFO - Random sleep: 0.92s
+2025-08-28 04:49:34 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010 (attempt 1/3)
+2025-08-28 04:49:35 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:49:35 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 04:49:35 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:49:35 - INFO - Parse completed - case_key:case:2024-06499-010, source:case, status:ok, extracted_keys:10, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:49:35 - INFO - Saved to cache: case:2024-06499-010
+2025-08-28 04:49:35 - INFO - Parse request f2ad83d9-357d-48d1-b9fc-04fdc2af96e0 completed (active: -5)
+2025-08-28 04:56:02 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 04:56:02 - INFO - Random sleep: 1.32s
+2025-08-28 04:56:03 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010 (attempt 1/3)
+2025-08-28 04:56:05 - INFO - Successfully fetched 160217 chars
+2025-08-28 04:56:05 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 04:56:05 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:56:05 - INFO - Parse completed - case_key:case:2024-06499-010, source:case, status:ok, extracted_keys:10, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:56:05 - INFO - Saved to cache: case:2024-06499-010
+2025-08-28 04:56:05 - INFO - Parse request 64555821-5962-4440-992d-78a3ae919c60 completed (active: -1)
+2025-08-28 04:56:05 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:56:05 - INFO - Random sleep: 1.36s
+2025-08-28 04:56:07 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:56:07 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:56:07 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:56:07 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:56:07 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:10, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:56:07 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 04:56:07 - INFO - Parse request 642fac5d-fc39-4b6f-9e33-4ceb8233cd48 completed (active: -2)
+2025-08-28 04:57:06 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:57:06 - INFO - Random sleep: 1.50s
+2025-08-28 04:57:08 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 04:57:10 - INFO - Successfully fetched 160217 chars
+2025-08-28 04:57:10 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 04:57:10 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:57:10 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:10, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:57:10 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 04:57:10 - INFO - Parse request 52bb471d-6f36-41db-8579-1caca9fc081f completed (active: -1)
+2025-08-28 04:57:10 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 04:57:10 - INFO - Random sleep: 1.16s
+2025-08-28 04:57:11 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010 (attempt 1/3)
+2025-08-28 04:57:12 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:57:12 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 04:57:12 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:57:12 - INFO - Parse completed - case_key:case:2024-06499-010, source:case, status:ok, extracted_keys:10, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:57:12 - INFO - Saved to cache: case:2024-06499-010
+2025-08-28 04:57:12 - INFO - Parse request 5cb7a819-15cc-4e8a-8e09-3f2f8b66f0e5 completed (active: -2)
+2025-08-28 04:57:12 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-12345-001
+2025-08-28 04:57:12 - INFO - Rate limiting: sleeping 1.41s
+2025-08-28 04:57:13 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-12345-001 (attempt 1/3)
+2025-08-28 04:57:14 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:57:14 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-12345-001
+2025-08-28 04:57:14 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:57:14 - INFO - Parse completed - case_key:case:2024-12345-001, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:57:14 - INFO - Saved to cache: case:2024-12345-001
+2025-08-28 04:57:14 - INFO - Parse request fa202836-4bcf-40ee-9e13-1614edea08db completed (active: -3)
+2025-08-28 04:59:17 - INFO - Using cached data for case_key: case:2024-06499-010
+2025-08-28 04:59:17 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 04:59:17 - INFO - Random sleep: 1.35s
+2025-08-28 04:59:19 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010 (attempt 1/3)
+2025-08-28 04:59:20 - INFO - Successfully fetched 147390 chars
+2025-08-28 04:59:20 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 04:59:20 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 04:59:20 - INFO - Parse completed - case_key:case:2024-06499-010, source:case, status:ok, extracted_keys:10, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 04:59:20 - INFO - Saved to cache: case:2024-06499-010
+2025-08-28 04:59:20 - INFO - Parse request 80c0fb07-53ab-4aa4-a185-98bd78262302 completed (active: -4)
+2025-08-28 05:00:06 - INFO - Using cached data for case_key: case:2024-00602-001
+2025-08-28 05:00:06 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-00602-001
+2025-08-28 05:00:06 - INFO - Random sleep: 1.05s
+2025-08-28 05:00:07 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-00602-001 (attempt 1/3)
+2025-08-28 05:00:08 - INFO - Successfully fetched 147390 chars
+2025-08-28 05:00:08 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-00602-001
+2025-08-28 05:00:08 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 05:00:08 - INFO - Parse completed - case_key:case:2024-00602-001, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:00:08 - INFO - Saved to cache: case:2024-00602-001
+2025-08-28 05:00:08 - INFO - Parse request b5057f8e-574d-497f-ae77-82aec68f03a0 completed (active: -5)
+2025-08-28 05:01:55 - INFO - Input validation failed: INVALID_INPUT -  2024-01774-006
+2025-08-28 05:01:55 - INFO - Parse request e27c01bc-ab6d-4d61-b3cf-f428102a5ea9 completed (active: -6)
+2025-08-28 05:02:02 - INFO - Using cached data for case_key: case:2024-01774-006
+2025-08-28 05:02:02 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 05:02:02 - INFO - Random sleep: 1.09s
+2025-08-28 05:02:03 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 05:02:04 - INFO - Successfully fetched 147390 chars
+2025-08-28 05:02:04 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 05:02:04 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 05:02:04 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:ok, extracted_keys:10, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:02:04 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 05:02:04 - INFO - Parse request 6effebd1-105a-4dad-8b16-135023dd86cc completed (active: -7)
+2025-08-28 05:02:49 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-05180-001
+2025-08-28 05:02:49 - INFO - Random sleep: 1.18s
+2025-08-28 05:02:50 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-05180-001 (attempt 1/3)
+2025-08-28 05:02:51 - INFO - Successfully fetched 147390 chars
+2025-08-28 05:02:51 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-05180-001
+2025-08-28 05:02:51 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 05:02:51 - INFO - Parse completed - case_key:case:2024-05180-001, source:case, status:ok, extracted_keys:10, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:02:51 - INFO - Saved to cache: case:2024-05180-001
+2025-08-28 05:02:51 - INFO - Parse request eb239c2d-4a55-4d75-9b33-ba05af7f22a9 completed (active: -8)
+2025-08-28 05:03:19 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-00528-005
+2025-08-28 05:03:19 - INFO - Random sleep: 1.11s
+2025-08-28 05:03:20 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-00528-005 (attempt 1/3)
+2025-08-28 05:03:21 - INFO - Successfully fetched 147390 chars
+2025-08-28 05:03:21 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-00528-005
+2025-08-28 05:03:21 - WARNING - Detected onbid error page, falling back to mock data
+2025-08-28 05:03:21 - INFO - Parse completed - case_key:case:2024-00528-005, source:case, status:pending, extracted_keys:7, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:03:21 - INFO - Saved to cache: case:2024-00528-005
+2025-08-28 05:03:21 - INFO - Parse request 70c7eb1b-aa9e-45f7-a6ae-e1206c9e4c32 completed (active: -9)
+2025-08-28 05:11:51 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 05:11:51 - INFO - Random sleep: 0.87s
+2025-08-28 05:11:52 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010 (attempt 1/3)
+2025-08-28 05:11:54 - INFO - Successfully fetched 160217 chars
+2025-08-28 05:11:54 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 05:11:54 - WARNING - Detected onbid error page
+2025-08-28 05:11:54 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:11:54 - INFO - Parse completed - case_key:case:2024-06499-010, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:11:54 - INFO - Saved to cache: case:2024-06499-010
+2025-08-28 05:11:54 - INFO - Parse request eecb9851-3491-458b-85b8-4e97902af182 completed (active: -1)
+2025-08-28 05:11:54 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-99999-999
+2025-08-28 05:11:54 - INFO - Random sleep: 1.28s
+2025-08-28 05:11:55 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-99999-999 (attempt 1/3)
+2025-08-28 05:11:56 - INFO - Successfully fetched 147390 chars
+2025-08-28 05:11:56 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-99999-999
+2025-08-28 05:11:56 - WARNING - Detected onbid error page
+2025-08-28 05:11:56 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:11:56 - INFO - Parse completed - case_key:case:2024-99999-999, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:11:56 - INFO - Saved to cache: case:2024-99999-999
+2025-08-28 05:11:56 - INFO - Parse request 2f9cb0be-7d4e-45df-8e44-3ae7e70ed6f3 completed (active: -2)
+2025-08-28 05:12:59 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 05:12:59 - INFO - Random sleep: 1.34s
+2025-08-28 05:13:00 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 05:13:02 - INFO - Successfully fetched 147390 chars
+2025-08-28 05:13:02 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 05:13:02 - WARNING - Detected onbid error page
+2025-08-28 05:13:02 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:13:02 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:13:02 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 05:13:02 - INFO - Parse request 72467a05-273e-401d-98d5-c898bb83c700 completed (active: -3)
+2025-08-28 05:13:47 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 05:13:47 - INFO - Random sleep: 0.97s
+2025-08-28 05:13:48 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 05:13:49 - INFO - Successfully fetched 160217 chars
+2025-08-28 05:13:49 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 05:13:49 - WARNING - Detected onbid error page
+2025-08-28 05:13:49 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:13:49 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:13:49 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 05:13:49 - INFO - Parse request a8409486-f2c5-4edd-bbc7-5a909a47a751 completed (active: -1)
+2025-08-28 05:15:51 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 05:15:51 - INFO - Random sleep: 0.98s
+2025-08-28 05:15:52 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 05:15:53 - INFO - Successfully fetched 160217 chars
+2025-08-28 05:15:53 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 05:15:53 - WARNING - Detected onbid error page
+2025-08-28 05:15:53 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:15:53 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:15:53 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 05:15:53 - INFO - Parse request 6056cd70-51ab-455d-9ee9-3deb7b2b2ab4 completed (active: -1)
+2025-08-28 05:16:50 - INFO - Using cached data for case_key: case:2024-06499-010
+2025-08-28 05:16:50 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 05:16:50 - INFO - Random sleep: 1.08s
+2025-08-28 05:16:51 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010 (attempt 1/3)
+2025-08-28 05:16:51 - INFO - Successfully fetched 147390 chars
+2025-08-28 05:16:51 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 05:16:51 - WARNING - Detected onbid error page
+2025-08-28 05:16:51 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:16:52 - INFO - Parse completed - case_key:case:2024-06499-010, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:16:52 - INFO - Saved to cache: case:2024-06499-010
+2025-08-28 05:16:52 - INFO - Parse request 861a04f8-c5c7-4cb6-a050-ce2da5008969 completed (active: -2)
+2025-08-28 05:17:11 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-88888-888
+2025-08-28 05:17:11 - INFO - Random sleep: 1.07s
+2025-08-28 05:17:12 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-88888-888 (attempt 1/3)
+2025-08-28 05:17:13 - INFO - Successfully fetched 160217 chars
+2025-08-28 05:17:13 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-88888-888
+2025-08-28 05:17:13 - WARNING - Detected onbid error page
+2025-08-28 05:17:13 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:17:13 - INFO - Parse completed - case_key:case:2024-88888-888, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:17:13 - INFO - Saved to cache: case:2024-88888-888
+2025-08-28 05:17:13 - INFO - Parse request aeabb977-fef2-4853-b461-a39a421a9179 completed (active: -1)
+2025-08-28 05:23:20 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-99999-999
+2025-08-28 05:23:20 - INFO - Random sleep: 0.92s
+2025-08-28 05:23:20 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-99999-999 (attempt 1/3)
+2025-08-28 05:23:22 - INFO - Successfully fetched 160217 chars
+2025-08-28 05:23:22 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-99999-999
+2025-08-28 05:23:22 - WARNING - Detected onbid error page
+2025-08-28 05:23:22 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:23:22 - INFO - Parse completed - case_key:case:2024-99999-999, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:23:22 - INFO - Saved to cache: case:2024-99999-999
+2025-08-28 05:23:22 - INFO - Parse request 5ca108bd-d1a3-4b7f-bf47-e079cd9ce84f completed (active: -1)
+2025-08-28 05:23:25 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-12345-001
+2025-08-28 05:23:25 - INFO - Random sleep: 1.02s
+2025-08-28 05:23:26 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-12345-001 (attempt 1/3)
+2025-08-28 05:23:28 - INFO - Successfully fetched 160217 chars
+2025-08-28 05:23:28 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-12345-001
+2025-08-28 05:23:28 - WARNING - Detected onbid error page
+2025-08-28 05:23:28 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:23:28 - INFO - Parse completed - case_key:case:2024-12345-001, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:23:28 - INFO - Saved to cache: case:2024-12345-001
+2025-08-28 05:23:28 - INFO - Parse request a7ee9f8b-64ce-4972-a56e-9e4229e239c6 completed (active: -1)
+2025-08-28 05:23:28 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-12345-999
+2025-08-28 05:23:28 - INFO - Random sleep: 1.15s
+2025-08-28 05:23:29 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-12345-999 (attempt 1/3)
+2025-08-28 05:23:31 - INFO - Successfully fetched 160217 chars
+2025-08-28 05:23:31 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-12345-999
+2025-08-28 05:23:31 - WARNING - Detected onbid error page
+2025-08-28 05:23:31 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:23:31 - INFO - Parse completed - case_key:case:2024-12345-999, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:23:31 - INFO - Saved to cache: case:2024-12345-999
+2025-08-28 05:23:31 - INFO - Parse request 0fc5abf6-eb0e-4ea5-965e-6fdfc5ffbc44 completed (active: -1)
+2025-08-28 05:26:16 - WARNING - STRICT mode: Cache case:2024-06499-010 is from non-strict mode - ignoring
+2025-08-28 05:26:16 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 05:26:16 - INFO - Random sleep: 1.16s
+2025-08-28 05:26:17 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010 (attempt 1/3)
+2025-08-28 05:26:19 - INFO - Successfully fetched 160217 chars
+2025-08-28 05:26:19 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 05:26:19 - WARNING - Detected onbid error page
+2025-08-28 05:26:19 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:26:19 - INFO - Parse completed - case_key:case:2024-06499-010, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:26:19 - INFO - Saved to cache: case:2024-06499-010
+2025-08-28 05:26:19 - INFO - Parse request 1d11834e-1495-4317-9460-56cf66146add completed (active: -1)
+2025-08-28 05:26:41 - INFO - Using cached data for case_key: case:2024-06499-010
+2025-08-28 05:26:41 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 05:26:41 - INFO - Random sleep: 1.18s
+2025-08-28 05:26:42 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010 (attempt 1/3)
+2025-08-28 05:26:43 - INFO - Successfully fetched 147390 chars
+2025-08-28 05:26:43 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 05:26:43 - WARNING - Detected onbid error page
+2025-08-28 05:26:43 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:26:43 - INFO - Parse completed - case_key:case:2024-06499-010, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:26:43 - INFO - Saved to cache: case:2024-06499-010
+2025-08-28 05:26:43 - INFO - Parse request 319254c9-f3a5-4652-87d6-a16a7393d408 completed (active: -2)
+2025-08-28 05:26:51 - INFO - Input validation failed: INVALID_INPUT -  2024-01774-006
+2025-08-28 05:26:51 - INFO - Parse request fae69b49-2847-4a60-ab2d-7308d8b73aa7 completed (active: -3)
+2025-08-28 05:27:16 - INFO - Input validation failed: INVALID_INPUT -  2024-01774-006
+2025-08-28 05:27:16 - INFO - Parse request 7b3aa4d3-aa12-405e-bbd1-0828fa087a35 completed (active: -4)
+2025-08-28 05:27:20 - INFO - Fetching real content from URL: https://www.onbid.co.kr/op/cta/cltrdtl/collateralRealEstateDetail.do?cltrNo=1832617
+2025-08-28 05:27:20 - INFO - Random sleep: 1.26s
+2025-08-28 05:27:21 - INFO - Fetching https://www.onbid.co.kr/op/cta/cltrdtl/collateralRealEstateDetail.do?cltrNo=1832617 (attempt 1/3)
+2025-08-28 05:27:22 - INFO - Successfully fetched 147385 chars
+2025-08-28 05:27:22 - WARNING - Detected onbid error page
+2025-08-28 05:27:22 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:27:22 - INFO - Parse completed - case_key:onbid:1832617, source:url, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:27:22 - INFO - Saved to cache: onbid:1832617
+2025-08-28 05:27:22 - INFO - Parse request 3dc4daf7-7c43-4f42-8dcb-ae8a5895cb42 completed (active: -5)
+2025-08-28 05:27:53 - WARNING - STRICT mode: Cache case:2024-01774-006 is from non-strict mode - ignoring
+2025-08-28 05:27:53 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 05:27:53 - INFO - Random sleep: 1.05s
+2025-08-28 05:27:54 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 05:27:55 - INFO - Successfully fetched 147390 chars
+2025-08-28 05:27:55 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 05:27:55 - WARNING - Detected onbid error page
+2025-08-28 05:27:55 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:27:55 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:27:55 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 05:27:55 - INFO - Parse request 8e16b0a2-324d-4e59-bc00-5a1fe6d36169 completed (active: -6)
+2025-08-28 05:38:53 - INFO - Input validation failed: INVALID_INPUT - None
+2025-08-28 05:38:53 - INFO - Parse request 0ec35714-d463-4e01-aca8-a907fda2544d completed (active: -7)
+2025-08-28 05:39:11 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 05:39:11 - INFO - Random sleep: 1.26s
+2025-08-28 05:39:12 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 05:39:14 - INFO - Successfully fetched 160217 chars
+2025-08-28 05:39:14 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 05:39:14 - WARNING - Detected onbid error page
+2025-08-28 05:39:14 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:39:14 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:39:14 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 05:39:14 - INFO - Parse request 60192381-a611-4387-85a6-642edfff6077 completed (active: -1)
+2025-08-28 05:39:14 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 05:39:14 - INFO - Random sleep: 1.17s
+2025-08-28 05:39:15 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 05:39:16 - INFO - Successfully fetched 147390 chars
+2025-08-28 05:39:16 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 05:39:16 - WARNING - Detected onbid error page
+2025-08-28 05:39:16 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:39:16 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:39:16 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 05:39:16 - INFO - Parse request c85981aa-2d6e-468c-a392-534d45e750d4 completed (active: -2)
+2025-08-28 05:40:52 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 05:40:52 - INFO - Random sleep: 1.34s
+2025-08-28 05:40:53 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010 (attempt 1/3)
+2025-08-28 05:40:55 - INFO - Successfully fetched 147390 chars
+2025-08-28 05:40:55 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 05:40:55 - WARNING - Detected onbid error page
+2025-08-28 05:40:55 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:40:55 - INFO - Parse completed - case_key:case:2024-06499-010, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:40:55 - INFO - Saved to cache: case:2024-06499-010
+2025-08-28 05:40:55 - INFO - Parse request c36200ab-3d24-4968-9418-33561790c528 completed (active: -3)
+2025-08-28 05:41:45 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 05:41:45 - INFO - Random sleep: 1.17s
+2025-08-28 05:41:46 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 05:41:47 - INFO - Successfully fetched 147390 chars
+2025-08-28 05:41:47 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 05:41:47 - WARNING - Detected onbid error page
+2025-08-28 05:41:47 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:41:47 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:41:47 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 05:41:47 - INFO - Parse request 6c33324b-179d-480e-8bda-5cc2ef94b121 completed (active: -4)
+2025-08-28 05:41:47 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 05:41:47 - INFO - Rate limiting: sleeping 1.09s
+2025-08-28 05:41:48 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010 (attempt 1/3)
+2025-08-28 05:41:49 - INFO - Successfully fetched 147390 chars
+2025-08-28 05:41:49 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 05:41:49 - WARNING - Detected onbid error page
+2025-08-28 05:41:49 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:41:49 - INFO - Parse completed - case_key:case:2024-06499-010, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:41:49 - INFO - Saved to cache: case:2024-06499-010
+2025-08-28 05:41:49 - INFO - Parse request 100220f3-1046-4757-864c-b987a4c0c0bc completed (active: -5)
+2025-08-28 05:41:49 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-99999-999
+2025-08-28 05:41:49 - INFO - Rate limiting: sleeping 1.38s
+2025-08-28 05:41:51 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-99999-999 (attempt 1/3)
+2025-08-28 05:41:51 - INFO - Successfully fetched 147390 chars
+2025-08-28 05:41:51 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-99999-999
+2025-08-28 05:41:51 - WARNING - Detected onbid error page
+2025-08-28 05:41:51 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:41:51 - INFO - Parse completed - case_key:case:2024-99999-999, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:41:51 - INFO - Saved to cache: case:2024-99999-999
+2025-08-28 05:41:51 - INFO - Parse request 08d8eb85-f082-4240-b43f-7786e91bd505 completed (active: -6)
+2025-08-28 05:43:20 - INFO - Using cached data for case_key: case:2024-01774-006
+2025-08-28 05:43:20 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 05:43:20 - INFO - Random sleep: 1.22s
+2025-08-28 05:43:21 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006 (attempt 1/3)
+2025-08-28 05:43:23 - INFO - Successfully fetched 147390 chars
+2025-08-28 05:43:23 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-01774-006
+2025-08-28 05:43:23 - WARNING - Detected onbid error page
+2025-08-28 05:43:23 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:43:23 - INFO - Parse completed - case_key:case:2024-01774-006, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:43:23 - INFO - Saved to cache: case:2024-01774-006
+2025-08-28 05:43:23 - INFO - Parse request 9e999827-ffe7-4df5-b9d7-84bbe9d35cee completed (active: -7)
+2025-08-28 05:43:56 - INFO - Input validation failed: INVALID_INPUT - 2024-01774-006 
+2025-08-28 05:43:56 - INFO - Parse request 2cb9fc63-80cd-4ecf-a01d-3d80a9a5dfe8 completed (active: -8)
+2025-08-28 05:44:02 - INFO - Input validation failed: INVALID_INPUT - 2024-01774-006 
+2025-08-28 05:44:02 - INFO - Parse request 9a4f1f57-e4e7-4b5a-9675-8b7dd24e5aaa completed (active: -9)
+2025-08-28 05:44:08 - INFO - Using cached data for case_key: case:2024-06499-010
+2025-08-28 05:44:08 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 05:44:08 - INFO - Random sleep: 0.98s
+2025-08-28 05:44:09 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010 (attempt 1/3)
+2025-08-28 05:44:10 - INFO - Successfully fetched 147390 chars
+2025-08-28 05:44:10 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 05:44:10 - WARNING - Detected onbid error page
+2025-08-28 05:44:10 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:44:10 - INFO - Parse completed - case_key:case:2024-06499-010, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:44:10 - INFO - Saved to cache: case:2024-06499-010
+2025-08-28 05:44:10 - INFO - Parse request d1d20a57-2814-47c3-9c1a-9d9ecec493b2 completed (active: -10)
+2025-08-28 05:49:13 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-14387-001
+2025-08-28 05:49:13 - INFO - Random sleep: 0.85s
+2025-08-28 05:49:14 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-14387-001 (attempt 1/3)
+2025-08-28 05:49:16 - INFO - Successfully fetched 147390 chars
+2025-08-28 05:49:16 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-14387-001
+2025-08-28 05:49:16 - WARNING - Detected onbid error page
+2025-08-28 05:49:16 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:49:16 - INFO - Parse completed - case_key:case:2024-14387-001, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:49:16 - INFO - Saved to cache: case:2024-14387-001
+2025-08-28 05:49:16 - INFO - Parse request 789aad70-e257-4fe3-ba89-0dff13885f1d completed (active: -11)
+2025-08-28 05:55:35 - INFO - Using cached data for case_key: case:2024-14387-001
+2025-08-28 05:55:35 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-14387-001
+2025-08-28 05:55:35 - INFO - Random sleep: 1.39s
+2025-08-28 05:55:36 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-14387-001 (attempt 1/3)
+2025-08-28 05:55:38 - INFO - Successfully fetched 147390 chars
+2025-08-28 05:55:38 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-14387-001
+2025-08-28 05:55:38 - WARNING - Detected onbid error page
+2025-08-28 05:55:38 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:55:38 - INFO - Parse completed - case_key:case:2024-14387-001, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:55:38 - INFO - Saved to cache: case:2024-14387-001
+2025-08-28 05:55:38 - INFO - Parse request df46166a-f58d-401c-909f-58151733d643 completed (active: -12)
+2025-08-28 05:56:25 - INFO - Using cached data for case_key: case:2024-06499-010
+2025-08-28 05:56:25 - INFO - Trying real search URL: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 05:56:25 - INFO - Random sleep: 0.99s
+2025-08-28 05:56:26 - INFO - Fetching https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010 (attempt 1/3)
+2025-08-28 05:56:27 - INFO - Successfully fetched 147390 chars
+2025-08-28 05:56:27 - INFO - Successfully fetched from: https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-06499-010
+2025-08-28 05:56:27 - WARNING - Detected onbid error page
+2025-08-28 05:56:27 - ERROR - STRICT mode: No fallback to mock data - returning empty
+2025-08-28 05:56:27 - INFO - Parse completed - case_key:case:2024-06499-010, source:case, status:pending, extracted_keys:0, attachment_state:NONE, error_code:ATTACHMENT_NONE
+2025-08-28 05:56:27 - INFO - Saved to cache: case:2024-06499-010
+2025-08-28 05:56:27 - INFO - Parse request 00af445f-415d-4550-a5de-5c50157dcac7 completed (active: -13)

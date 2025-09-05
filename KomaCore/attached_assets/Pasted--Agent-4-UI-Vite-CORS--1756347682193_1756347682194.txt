@@ -1,0 +1,65 @@
+[Agent 작업요청] 초보자용 4단계 위저드 UI 재적용 + Vite 차단해제 + CORS 확정 + 실행증빙
+
+목표
+- 프런트 화면을 ‘물건 입력 → 권리분석 → 시세조사 → 입찰가’ 4단계 위저드로 교체.
+- Replit 프리뷰에서 발생한 “Blocked host… add to server.allowedHosts” 오류를 근본 해결.
+- 백엔드 CORS를 dev에서 확실히 허용, 프런트에서 /onbid/parse·/bidprice 실호출 검증.
+- 스크린샷/JSON 포함 스모크 리포트 제출.
+
+A) 프런트 코드 반영 (위저드 UI)
+1. `komacore-ui/src/App.tsx` 를 ‘4-단계 위저드 UI’ 컴포넌트로 교체(파일 생성/덮어쓰기).
+   - 구성: STEP1(물건 입력/공고문 불러오기)→STEP2(권리 플래그+안전등급)→STEP3(시세/자금 가정)→STEP4(입찰가 3안+ROI+권장가)
+   - axios 인스턴스: `baseURL=VITE_API_BASE`, header `x-api-key=VITE_API_KEY`
+
+2. `komacore-ui/.env` 생성:
+   VITE_API_BASE=https://<백엔드호스트>/api/v1
+   VITE_API_KEY=dev
+
+B) Vite 5 프록시 차단 해제(에러 원인 제거)
+1. `komacore-ui/vite.config.ts` 정확히 아래로 교체:
+   import { defineConfig } from 'vite';
+   import react from '@vitejs/plugin-react';
+   export default defineConfig({
+     plugins: [react()],
+     server: { host:'0.0.0.0', port:5173, strictPort:true, allowedHosts:true, hmr:{ clientPort:443 } },
+     preview:{ host:'0.0.0.0', port:5173, allowedHosts:true }
+   });
+
+2. `komacore-ui/package.json` 스크립트 확인/수정:
+   "dev": "vite --host 0.0.0.0 --port 5173",
+   "preview": "vite preview --host 0.0.0.0 --port 5173"
+
+C) 백엔드 CORS/보안(dev 확장)
+1. dev 모드에서 CORS 허용:
+   - `.env.dev` 또는 `.env`에 `CORS_ORIGINS=*` (또는 프런트 미리보기 URL 명시) 저장.
+2. 공개/보호 엔드포인트 재확인:
+   - 공개: /, /docs, /openapi.json, /api/v1/healthz, /api/v1/meta
+   - 보호(x-api-key): /api/v1/profile, /api/v1/analyze, /api/v1/bidprice, /api/v1/onbid/parse
+
+D) 실행 및 스모크
+1. 백엔드: (이미 실행 중 아니면)
+   uv run uvicorn main:app --host 0.0.0.0 --port 8000
+2. 프런트:
+   cd komacore-ui && npm install && npm run dev -- --host 0.0.0.0 --port 5173
+3. UI 검증(프리뷰 창):
+   - STEP1: 온비드 URL 또는 사건번호 입력 → “공고문 불러오기” → 우측에 감정가/최저가/차수/플래그 뱃지 프리필.
+   - STEP2: 체크 후 “안전등급 계산” → safe/conditional/risky 표시.
+   - STEP3: 월세·공실률·보유비용·수리비·세율·금리·LTV 입력.
+   - STEP4: “입찰가 계산” → 보수/주력/공격 3카드 + ROI 막대차트 + 권장 상한가.
+4. 오류 토스트도 한 번 확인:
+   - VITE_API_KEY를 임시로 지워 401 발생 → 한글 메시지 노출 확인 후 원복.
+
+E) 리포트 산출물(SMOKE_TEST_REPORT.md 업데이트)
+- 스크린샷 2장: (1) STEP1 파싱 요약, (2) STEP4 3안+ROI
+- cURL 2건과 응답 JSON:
+  a) curl -s https://<host>/api/v1/healthz
+  b) curl -s -H "x-api-key: dev" -H "content-type: application/json" \
+     -X POST https://<host>/api/v1/bidprice -d \
+     '{"appraisal":235000000,"min_bid":164500000,"round":2,"target_monthly_net":1500000,"target_roi":0.09,"rent_monthly":1900000,"vacancy_rate":0.08,"repair":12000000,"purchase_taxes_rate":0.047,"loan_rate":0.064,"loan_ltv":0.65,"holding_costs_monthly":250000,"vat_applicable":false}'
+- 백엔드 폴더 목록: `ls -al data/raw/<case_no>/` (raw_data.json 확인)
+
+완료 기준
+- 프론트 프리뷰에서 더 이상 “Blocked host/allowedHosts” 문구 없음.
+- 4단계 위저드 한글 라벨로 표시, 버튼 동작 정상.
+- /onbid/parse 프리필 작동, /bidprice 결과 3카드+ROI+권장가 렌더.
+- 리포트에 스크린샷·응답 JSON·폴더목록 반영.

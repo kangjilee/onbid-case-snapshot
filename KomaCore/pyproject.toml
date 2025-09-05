@@ -1,0 +1,21 @@
+[project]
+name = "repl-nix-workspace"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.11"
+dependencies = [
+    "beautifulsoup4>=4.13.5",
+    "black>=25.1.0",
+    "fastapi>=0.116.1",
+    "httpx>=0.28.1",
+    "lxml>=6.0.1",
+    "pydantic>=2.11.7",
+    "pytest>=8.4.1",
+    "pytest-cov>=6.2.1",
+    "python-dotenv>=1.1.1",
+    "requests>=2.32.5",
+    "ruff>=0.12.10",
+    "slowapi>=0.1.9",
+    "starlette>=0.47.3",
+    "uvicorn>=0.35.0",
+]

@@ -1,0 +1,76 @@
+[Agent 작업요청] KomaCore E2E v0 (Onbid Parse + CORS + Front UI)
+
+목표: 온비드 사건 URL/번호 입력 → 공고문 파싱 → 권리플래그·핵심값 산출 → /bidprice 호출 → 프런트에서 3안(보수/주력/공격) 시각화까지 동작.
+
+환경:
+- 백엔드: FastAPI(KomaCore) /docs 열림, x-api-key=dev
+- 프런트: komacore-ui (Vite+React+TS). .env ⇒ VITE_API_BASE=https://<backend>/api/v1, VITE_API_KEY=dev
+
+1) OnbidParse v0 구현
+- 엔드포인트: POST /api/v1/onbid/parse (body: {"case_no"?:string, "url"?:string} 중 1 필수)
+- 응답 스키마:
+  {
+    "asset_type":"압류재산|국유재산|수탁재산|신탁공매|기타동산",
+    "use_type":"근린상가|오피스텔|공장|토지|...",
+    "address":string,
+    "areas":{"building_m2":number|null,"land_m2":number|null,"land_right":bool|null},
+    "appraisal":number|null,"min_bid":number|null,"round":number|null,
+    "duty_deadline":string|null,
+    "pay_due":{"base_days":30,"grace_days":10},
+    "notes":string|null,
+    "flags":{"지분":bool,"대지권없음":bool,"건물만":bool,"부가세":bool,"특약":bool},
+    "attachments":[{"name":string,"saved":string}],
+    "status":"ok|pending"
+  }
+- 저장: 원문/첨부 → data/raw/{case_no}/
+- 플래그 정규식:
+  지분: (공유|지분)\s*매각
+  대지권없음: (대지권\s*미등기|대지권\s*없음)
+  건물만: (건물만\s*매각|토지\s*제외)
+  부가세: (부가가치세\s*(별도|과세)|VAT\s*(별도|과세))
+  특약: (특약|유의사항|매수인\s*책임|인수\s*사항)
+
+2) CORS/보안 정비
+- 사업 엔드포인트에만 x-api-key 적용(/profile,/analyze,/bidprice,/onbid/parse).
+- 백엔드 .env.* 의 CORS_ORIGINS에 프런트 미리보기 도메인 추가 후 재시작.
+- /, /docs, /openapi.json, /api/v1/healthz, /api/v1/meta 는 공개.
+
+3) 프런트 연동 검증
+- 버튼 “샘플로 계산”으로 /bidprice 호출 및 카드+막대차트 렌더.
+- parse→bidprice 연계: /onbid/parse 응답값 중 appraisal/min_bid/round 를 폼에 주입하는 흐름 추가(옵션).
+
+4) 스모크 테스트 & 산출물
+- Swagger Authorize: x-api-key=dev
+- 다음 4건 200 확인 및 핵심키 스크린샷/JSON 수집:
+  GET /api/v1/healthz → {"status":"ok"}
+  POST /api/v1/profile  (JSON A) → data.loan_limit 존재
+  POST /api/v1/analyze  (JSON B) → data.grade ∈ {safe,conditional,risky}
+  POST /api/v1/bidprice (JSON C) → data.scenarios.core.bid_price & data.affordable_bid 존재
+  + 신규: POST /api/v1/onbid/parse (JSON D) → 키 8개↑ 채움, attachments 저장 경로 반환
+- cURL 교차검증:
+  curl -s https://<host>/api/v1/healthz
+  curl -s -H "x-api-key: dev" -H "content-type: application/json" \
+    -X POST https://<host>/api/v1/onbid/parse -d '{"url":"<onbid-url-sample>"}'
+- 제출물: (a) /docs 목록 & bidprice 응답 스샷 2장, (b) cURL과 응답 JSON, (c) 간단 리포트(엔드포인트/상태코드/핵심키/소요시간), (d) 저장된 data/raw/{case}/ 파일 리스트.
+
+JSON A (profile)
+{"income_monthly":6500000,"existing_loans_monthly":800000,"credit_score":820,"stress_rate":0.07,"ltv_cap":0.7}
+
+JSON B (analyze)
+{"asset_type":"압류재산","use_type":"근린상가","flags":{"지분":false,"대지권없음":false,"건물만":false,"임차인대학력":true,"부가세":false}}
+
+JSON C (bidprice)
+{"appraisal":235000000,"min_bid":164500000,"round":2,"target_monthly_net":1500000,"target_roi":0.09,"rent_monthly":1900000,"vacancy_rate":0.08,"repair":12000000,"purchase_taxes_rate":0.047,"loan_rate":0.064,"loan_ltv":0.65,"holding_costs_monthly":250000,"vat_applicable":false}
+
+JSON D (parse)
+{"url":"<예: https://www.onbid.co.kr/...사건URL>"}
+
+에러 처리 가이드
+- 401: Swagger Authorize/헤더 보정
+- 422: 필드/타입 수정
+- 5xx: .env·로그 확인 → 코드 수정·재배포 → 재테스트(수정사항 리포트 포함)
+
+완료 기준
+- 3 POST + 1 GET + 1 PARSE 모두 200, 핵심키 정상
+- 프런트에서 /bidprice 실호출 및 차트 렌더
+- data/raw/{case}/ 에 첨부 저장 확인, README·curl.md 갱신

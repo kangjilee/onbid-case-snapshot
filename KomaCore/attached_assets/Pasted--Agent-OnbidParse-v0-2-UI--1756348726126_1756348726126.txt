@@ -1,0 +1,90 @@
+[Agent 작업요청] OnbidParse v0.2 (첨부 유무 인지 + 실패하지 않는 파서) + UI/테스트
+
+목표
+- 공고문 파싱 시 첨부(감정평가서/제산명세서) “있음/없음”을 먼저 감지.
+- 어떤 상황(첨부없음/원격차단/형식오류)도 200으로 응답, 다음 단계로 진행 가능.
+- 실패/보류 사유를 error_code/error_hint로 한국어 노출.
+
+A) API 규격 (항상 200 반환)
+POST /api/v1/onbid/parse
+req:  { "url"?: string, "case_no"?: string }      // 둘 중 1개 이상 전달 권장
+resp: {
+  "status": "ok" | "pending",                    // ok=핵심값 8개↑, pending=최소값만 채움
+  "case_no": string|null,
+  "asset_type": string|null, "use_type": string|null, "address": string|null,
+  "areas": { "building_m2": number|null, "land_m2": number|null, "land_right": boolean|null },
+  "appraisal": number|null, "min_bid": number|null, "round": number|null,
+  "duty_deadline": string|null,
+  "pay_due": { "base_days": 30, "grace_days": 10 },
+  "flags": { "지분": boolean, "대지권없음": boolean, "건물만": boolean, "부가세": boolean, "특약": boolean },
+  "attachments": [ { "name": string, "saved": string } ],
+  "attachment_state": "READY" | "NONE" | "DOWNLOAD_FAIL",
+  "notes": string|null,
+  "extracted_keys": number,                      // null이 아닌 필드 개수
+  "error_code": string|null,                     // 아래 매핑
+  "error_hint": string|null,                     // 한국어 메시지(UI 상단 배너)
+  "debug": { "source": "url|case|invalid", "http_status": number|null, "last_url": string|null }
+}
+
+B) 동작 순서 (첨부 인지 중심)
+1) 입력 정규화
+   - URL 지원패턴(대소문자 무시):
+     /op/cta/cltrdtl/collateralRealEstateDetail.do?cltrNo=(\d+)
+     /auction/case/(\d+)
+   - 사건번호 패턴: ^\d{4}-\d{5}-\d{3}$
+   - 모두 불일치 → status:pending, error_code=INVALID_INPUT, error_hint="URL/사건번호 형식이 다릅니다(예: 2024-05180-001)".
+
+2) 프리플라이트 & 수집
+   - requests.get(headers: UA/Referer/Language 고정, timeout=10, allow_redirects=True), 재시도 3회(0.5/1/2s).
+   - http_status != 200 → pending, error_code=REMOTE_HTTP_{코드}, error_hint="원격 응답 {코드}. 잠시 후 재시도하거나 사건번호 사용".
+
+3) 첨부 유무 판단 (HTML에서 ‘첨부/파일/감정평가서/제산명세서’ 섹션 키워드 탐색)
+   - 있으면: attachment_state=READY, 목록 추출→ data/raw/{case}/ 저장 시도(실패 시 DOWNLOAD_FAIL).
+   - 없으면: attachment_state=NONE, notes="입찰준비중: 첨부 미게시(정상 케이스일 수 있음)".
+
+4) 핵심값 추출 (있는 만큼만)
+   - 감정가/최저가/차수/배분종기/주소/용도 등 정규식 키워드로 탐색(없으면 null).
+   - flags: 지분/대지권없음/건물만/부가세/특약 룰기반(미탐지 시 false).
+   - extracted_keys 계산 후, 8개 이상이면 status=ok, 미만이면 pending.
+
+5) 절대 throw 금지
+   - 예외는 모두 pending + error_code + error_hint로 변환해 200 반환.
+
+C) 에러 코드/힌트(한국어)
+- INVALID_INPUT: "URL/사건번호 형식이 올바르지 않습니다."
+- REMOTE_HTTP_403: "원격 서버가 차단(403)했습니다. 잠시 후 재시도하거나 사건번호로 시도하세요."
+- ATTACHMENT_NONE: "첨부 미게시 상태(입찰준비중일 수 있음). 최소정보로 진행합니다."
+- ATTACHMENT_DOWNLOAD_FAIL: "첨부 다운로드에 실패했습니다. 네트워크 후 재시도."
+- PARSE_EMPTY: "문서에서 필요한 정보를 찾지 못했습니다(형식 변경 가능)."
+- UNKNOWN: "알 수 없는 오류. 로그를 확인하세요."
+
+D) 로깅
+- logs/onbid_parser.log(롤링 5MB): timestamp, input(url/case), http_status, attachment_state, status, extracted_keys, error_code 기록.
+
+E) UI 반영 (이미 4단계 위저드)
+- 응답의 error_hint가 있으면 상단 배너 표시.
+  - attachment_state=NONE → 노랑 정보배너(에러 아님): “첨부 미게시, 기본값으로 진행”
+  - REMOTE_HTTP/INVALID_INPUT → 빨강 경고배너
+- pending이어도 STEP2~4 버튼 활성(수동 값으로 계속 진행).
+- 프리필 가능 항목(appraisal/min_bid/round 등)은 자동 채움.
+
+F) 스모크 테스트 (사건번호 포함)
+# 1) 지정 사건번호로 호출
+curl -s -H "x-api-key: dev" -H "content-type: application/json" \
+  -X POST https://<host>/api/v1/onbid/parse -d '{"case_no":"2024-05180-001"}'
+# 기대: 200, attachment_state=READY|NONE, status=ok 또는 pending, extracted_keys>=5, error_hint(있을 수 있음)
+
+# 2) 잘못된 URL로 호출(형식 오류 가시화)
+curl -s -H "x-api-key: dev" -H "content-type: application/json" \
+  -X POST https://<host>/api/v1/onbid/parse -d '{"url":"https://onbid.co.kr/bad/url"}'
+# 기대: 200, status:pending, error_code=INVALID_INPUT, error_hint 노출
+
+# 3) UI 위저드
+- STEP1: 위 사건번호로 “공고문 불러오기” → 배너(첨부 없음/차단 사유) + 프리필 확인
+- STEP4: “입찰가 계산” → 보수/주력/공격 3카드 + ROI + 권장가 렌더
+
+G) 완료 기준
+- /onbid/parse가 어떤 입력에도 200, crash 없음.
+- 첨부 상태(READY/NONE/DOWNLOAD_FAIL)가 응답과 UI에 명확히 표시.
+- 정상/보류 모두 위저드가 끝까지 진행(프리필+수동입력 혼합).
+- SMOKE_TEST_REPORT.md에 (1) 응답 JSON 2개, (2) STEP1 배너/요약, (3) STEP4 결과 스샷, (4) parser.log 일부 첨부.

@@ -1,0 +1,91 @@
+\[요약 결론]
+스모크 통과 좋습니다. 다음은 **회귀 테스트 자동화 + 사용설명서 고정**입니다. 아래 문구를 Agent에 붙여 넣어 한 번에 처리하세요.
+
+---
+
+**\[Agent 작업요청] KomaCore 회귀 테스트/문서화 자동화(로컬 TestClient 방식)**
+
+목표: 엔드포인트 4종에 대한 자동 회귀 테스트를 `pytest`로 추가하고, 실행법·cURL 모음 문서를 저장해 배포 전 품질을 고정해 주세요.
+
+작업 순서
+
+1. 개발 의존성 추가: `pytest`, `pytest-cov`. `pyproject.toml`에 dev-dependencies로 반영.
+2. `tests/test_api.py` 파일 생성(아래 내용 그대로):
+
+```python
+# tests/test_api.py
+from fastapi.testclient import TestClient
+from main import app
+
+client = TestClient(app)
+API = "/api/v1"
+HEAD = {"x-api-key": "dev"}
+
+def test_healthz():
+    r = client.get(f"{API}/healthz")
+    assert r.status_code == 200
+    assert r.json().get("success", True) in (True, False)
+
+def test_profile():
+    payload = {
+        "income_monthly": 6500000,
+        "existing_loans_monthly": 800000,
+        "credit_score": 820,
+        "stress_rate": 0.07,
+        "ltv_cap": 0.7
+    }
+    r = client.post(f"{API}/profile", json=payload, headers=HEAD)
+    assert r.status_code == 200
+    body = r.json()
+    assert "data" in body and "loan_limit" in body["data"]
+
+def test_analyze():
+    payload = {
+        "asset_type": "압류재산",
+        "use_type": "근린상가",
+        "flags": {"지분": False, "대지권없음": False, "건물만": False, "임차인대학력": True, "부가세": False}
+    }
+    r = client.post(f"{API}/analyze", json=payload, headers=HEAD)
+    assert r.status_code == 200
+    grade = r.json()["data"]["grade"]
+    assert grade in ("safe", "conditional", "risky")
+
+def test_bidprice():
+    payload = {
+        "appraisal": 235000000, "min_bid": 164500000, "round": 2,
+        "target_monthly_net": 1500000, "target_roi": 0.09,
+        "rent_monthly": 1900000, "vacancy_rate": 0.08, "repair": 12000000,
+        "purchase_taxes_rate": 0.047, "loan_rate": 0.064, "loan_ltv": 0.65,
+        "holding_costs_monthly": 250000, "vat_applicable": False
+    }
+    r = client.post(f"{API}/bidprice", json=payload, headers=HEAD)
+    assert r.status_code == 200
+    d = r.json()["data"]
+    assert "scenarios" in d and "affordable_bid" in d
+```
+
+3. `Makefile` 또는 npm 스크립트 추가(택1). Makefile 사용 시:
+
+```
+test:
+\tpytest -q --maxfail=1 --disable-warnings
+coverage:
+\tpytest --cov=.
+```
+
+4. `docs/curl.md` 생성: Swagger 우측의 cURL 3개 복사해 저장(healthz/profile/analyze/bidprice).
+5. 테스트 실행 후 결과(요약, 실패 시 스택트레이스)와 `docs/curl.md`를 커밋·푸시.
+
+성공 기준
+
+* `pytest` 전부 통과(4/4), 실패 0.
+* `docs/curl.md`에 4개 cURL 존재.
+* 리드미에 “테스트 실행법” 섹션 추가.
+
+---
+
+\[다음 행동]
+
+1. Agent 완료되면 **테스트 통과 스샷+로그**만 확인.
+2. 그다음 단계로 **CORS 화이트리스트·/docs 운영 비노출** 토글 작업 지시하겠습니다.
+3. 프런트에서 `/bidprice`만 연결해 **입찰가 3안** 화면 목업 시작.

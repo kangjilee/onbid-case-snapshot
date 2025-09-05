@@ -1,0 +1,53 @@
+{
+  "url": null,
+  "content": "\n            압류재산 매각 공고\n            사건번호: UNIT_TEST_001\n            용도: 근린상가\n            소재지: 서울특별시 강남구 역삼동 123-45\n            감정가: 2억 3500만원\n            최저입찰가: 1억 6450만원 (2회차)\n            토지면적: 120.50㎡\n            건물면적: 85.30㎡\n            특약사항: 매수인은 임차인 권리를 승계함\n            부가가치세 별도 과세 대상\n            ",
+  "parsed_data": {
+    "asset_type": "압류재산",
+    "use_type": "근린상가",
+    "address": "서울특별시 강남구 역삼동 123-45",
+    "areas": {
+      "building_m2": 85.3,
+      "land_m2": 120.5,
+      "land_right": true
+    },
+    "appraisal": 200000000.0,
+    "min_bid": 100000000.0,
+    "round": 2,
+    "duty_deadline": null,
+    "pay_due": {
+      "base_days": 30,
+      "grace_days": 10
+    },
+    "notes": "파싱된 공고문 내용",
+    "attachments": [
+      {
+        "name": "감정평가서.pdf",
+        "ext": "pdf"
+      },
+      {
+        "name": "토지대장.pdf",
+        "ext": "pdf"
+      },
+      {
+        "name": "건축물대장.pdf",
+        "ext": "pdf"
+      }
+    ],
+    "saved_attachments": [
+      {
+        "name": "감정평가서.pdf",
+        "saved": "data/raw/836152/attachment_1.pdf"
+      },
+      {
+        "name": "토지대장.pdf",
+        "saved": "data/raw/836152/attachment_2.pdf"
+      },
+      {
+        "name": "건축물대장.pdf",
+        "saved": "data/raw/836152/attachment_3.pdf"
+      }
+    ]
+  },
+  "parsed_at": "2025-08-28T01:09:10.238639",
+  "case_no": "UNIT_TEST_001"
+}

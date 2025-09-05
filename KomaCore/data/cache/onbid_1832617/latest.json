@@ -1,0 +1,44 @@
+{
+  "status": "pending",
+  "requested_case": "https://www.onbid.co.kr/op/cta/cltrdtl/collateralRealEstateDetail.do?cltrHstrNo=5614504&cltrNo=1832617&plnmNo=830430&pbctNo=9930892&scrnGrpCd=0001&pbctCdtnNo=5479812",
+  "case_key": "onbid:1832617",
+  "case_no": null,
+  "source_hint": "url",
+  "mismatch": true,
+  "asset_type": null,
+  "use_type": null,
+  "address": null,
+  "areas": {
+    "building_m2": null,
+    "land_m2": null,
+    "land_right": null
+  },
+  "appraisal": null,
+  "min_bid": null,
+  "round": null,
+  "duty_deadline": null,
+  "pay_due": {
+    "base_days": 30,
+    "grace_days": 10
+  },
+  "flags": {
+    "지분": false,
+    "대지권없음": false,
+    "건물만": false,
+    "부가세": false,
+    "특약": false
+  },
+  "attachments": [],
+  "attachment_state": "NONE",
+  "notes": "입찰준비중: 첨부 미게시(정상 케이스일 수 있음)",
+  "extracted_keys": 0,
+  "error_code": "ATTACHMENT_NONE",
+  "error_hint": "입력 사건과 응답 사건이 다릅니다",
+  "debug": {
+    "source": "url",
+    "http_status": 200,
+    "last_url": "https://www.onbid.co.kr/op/cta/cltrdtl/collateralRealEstateDetail.do?cltrNo=1832617"
+  },
+  "req_id": "3dc4daf7-7c43-4f42-8dcb-ae8a5895cb42",
+  "cached_at": "2025-08-28T05:27:22.534914"
+}

@@ -1,0 +1,44 @@
+{
+  "status": "pending",
+  "requested_case": "2024-00528-005",
+  "case_key": "case:2024-00528-005",
+  "case_no": "2024-00528-005",
+  "source_hint": "case",
+  "mismatch": true,
+  "asset_type": "국유재산",
+  "use_type": "오피스텔",
+  "address": "정보 부족 - 사건번호 2024-00528-005 상세정보 확인 필요",
+  "areas": {
+    "building_m2": null,
+    "land_m2": null,
+    "land_right": true
+  },
+  "appraisal": 830000000.0,
+  "min_bid": 219000000.0,
+  "round": 2,
+  "duty_deadline": null,
+  "pay_due": {
+    "base_days": 30,
+    "grace_days": 10
+  },
+  "flags": {
+    "지분": false,
+    "대지권없음": false,
+    "건물만": false,
+    "부가세": false,
+    "특약": false
+  },
+  "attachments": [],
+  "attachment_state": "NONE",
+  "notes": "입찰준비중: 첨부 미게시(정상 케이스일 수 있음)",
+  "extracted_keys": 7,
+  "error_code": "ATTACHMENT_NONE",
+  "error_hint": "입력 사건과 응답 사건이 다릅니다",
+  "debug": {
+    "source": "case",
+    "http_status": 200,
+    "last_url": "https://www.onbid.co.kr/op/ppa/plnmmn/publicAnnounceRlstDetail.do?keyword=2024-00528-005"
+  },
+  "req_id": "70c7eb1b-aa9e-45f7-a6ae-e1206c9e4c32",
+  "cached_at": "2025-08-28T05:03:21.069907"
+}

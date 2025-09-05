@@ -1,0 +1,60 @@
+[Agent 작업요청] “다른 물건이 나오는 버그” 근본 해결 (키정규화·캐시분리·모크제거·UI초기화)
+
+목표
+- 사건번호(또는 URL)를 넣으면 **항상 그 사건 데이터만** 보이게.
+- 원인: 케이스키 충돌/캐시 재사용/모크 값/상태 미초기화를 제거.
+- 실패 시 한국어로 이유 표시(불일치 감지 배너).
+
+A) 재현 시나리오 (둘 다 캡처 필수)
+1) 사건 A: 2024-01774-006 (아파트) → STEP1 불러오기 → STEP2 물건정보가 **아파트**여야 함.
+2) 사건 B: 2024-05180-001 (오피스텔/캠코) → 불러오기 → **오피스텔**이어야 함.
+→ 현재 “상가/다른 물건”이 뜨면 버그 재현 성공.
+
+B) 파서/저장소 수정 (키 충돌/캐시 재사용 금지)
+1) 케이스키 정규화 함수 추가:
+   - 입력: url 또는 case_no
+   - 출력: case_key = 
+     url이면 `cltrNo` 또는 `case/<digits>` 추출,
+     case_no면 하이픈 포함 원형(예: `2024-01774-006`) 유지.
+   - **digits-only로 바꾸지 말 것**(충돌 위험).
+2) 저장 경로 분리: `data/raw/{case_key}/` (기존 폴더와 중복되면 새로 생성).
+3) 파서 응답에 아래 4개 필드 **반드시 채움**:
+   - `requested_case`: 사용자가 입력한 값
+   - `case_key`: 정규화된 내부키
+   - `case_no`: 화면에 보여줄 원형(없으면 null)
+   - `source_hint`: 'url' | 'case'
+4) 모크/샘플 값 전면 제거:
+   - 응답에 `status:"mock"` 분기/더미 텍스트가 남아 있으면 모두 삭제.
+5) 강제 새로수집 옵션:
+   - `/api/v1/onbid/parse`에 `force:boolean=false` 파라미터 추가.
+   - `force=true`면 기존 `data/raw/{case_key}` 무시하고 재수집.
+
+C) UI 수정 (상태 초기화 & 불일치 감지)
+1) STEP1에서 “공고문 불러오기” 클릭 시 상태 초기화:
+   - `setParsed(null); setGrade(null); setBid(null);` 3개 전부 reset.
+2) 패널 상단에 **확인 배지** 표시:
+   - `입력: {requested_case} / 응답: {case_no||case_key}`.
+   - 서로 다르면 **빨간 배너**: “입력 사건과 다른 사건이 감지됨 — 다시 불러오기(강제)” 버튼 노출.
+3) 물건정보 패널은 **parsed 응답**만 바인딩(기본/데모 텍스트 제거).
+4) “강제 새로수집” 토글(체크박스) 추가 → parse 호출 시 `force:true` 전달.
+
+D) 방어 로직 (백엔드)
+- 파서가 `case_key`를 만들 수 없으면 `status:"pending", error_code:"INVALID_INPUT"`으로 200 반환.
+- `requested_case != case_no && != case_key`이면 응답에 `mismatch:true, error_hint:"입력 사건과 응답 사건이 다릅니다"` 포함.
+
+E) 단위/스모크 테스트
+1) test_keys:
+   - 입력 `2024-01774-006` → `case_key` 그대로, `case_no` 같음.
+   - 입력 URL `/auction/case/12345` → `case_key=12345`, `case_no` null 허용.
+2) test_isolation:
+   - 사건 A 저장 후 사건 B 저장 → 폴더/파일이 서로 다름을 assert.
+3) UI 스모크:
+   - 사건 A → 아파트 라벨/감정가 보임
+   - 사건 B → 오피스텔 라벨/감정가 보임
+   - mismatch 배너가 필요 시 노출되는지 확인
+→ 결과 스샷 2장(사건 A/B) + 응답 JSON 2개를 SMOKE_TEST_REPORT.md에 첨부.
+
+F) 커밋 규칙
+- fix(parse): normalize case_key & isolate cache
+- fix(ui): reset state on fetch & mismatch banner
+- chore(tests): add case isolation tests

@@ -1,0 +1,80 @@
+\[요약 결론]
+현재 실패 원인: **요청스키마 422·케이스키 비교오류·상세URL 해석실패(검색페이지 수신)**. 해결은 **요청스키마 정합→URL 리졸버 2단계(검색→상세)→케이스키 비교 규칙 수정**이 핵심. 아래 문구를 그대로 에이전트 티켓에 붙이면 실매물만 정확히 나오게 됩니다.
+
+\[최종 티켓—실매물 파싱 안정화(붙여넣기용)]
+
+```
+[목표] 사건 입력 시 “실제 온비드 해당 사건”만 파싱. 422 제거, 검색페이지 수신 금지, mismatch 오경보 제거.
+
+A) 요청 스키마/에러(422 근절)
+- POST /onbid/parse 요청모델: {"case": string, "force": bool=false}
+- 하위호환: Pydantic alias 추가 → case_no, cltrNo 모두 case로 매핑(allow_population_by_field_name=True).
+- 422 발생 시 400으로 변환해 JSON 표준화: {"error_code":"INVALID_INPUT","error_hint":"expected field 'case' (e.g. '2024-01774-006' or 'onbid:1234567')"}.
+
+B) 케이스키 정규화/비교(오경보 제거)
+- 입력: 사건번호 → "case:YYYY-######-###"(하이픈 유지), cltrNo → "onbid:<digits>".
+- 상세페이지에서 case_no_extracted(사건번호)와 cltr_no_extracted(숫자)를 모두 추출.
+- mismatch 규칙: (둘 다 존재할 때만) requested_case(normalize) ≠ (case_no_extracted || "onbid:"+cltr_no_extracted) 일 때만 true.
+  * "case:2024-..." vs "2024-..." 같은 형식차이는 normalize 후 비교.
+
+C) URL 리졸버(검색→상세 2단계)
+- 입력이 사건번호면 1단계 검색(discovery) → 결과에서 cltrNo 추출 → 2단계 상세(detail) 접근.
+- 시도 순서:
+  1) 검색: /op/ppa/plnmmn/publicAnnounceList.do?q=<사건번호> (GET) 또는 동등 목록 URL들.
+     - a[href*="Detail"], onclick, data-cltrno 속성에서 cltrNo 정규식 r'cltrNo[=:"\'](\d+)' 추출.
+  2) 상세: known patterns 배열을 순차 시도(302/검색페이지면 다음 패턴): 
+     - .../publicAnnounceRlstDetail.do?cltrNo=<id>
+     - .../scrap/announceDetail.do?cltrNo=<id>
+     - 기타 기존 5개 패턴.
+- 상세페이지 판정: 문서 내에 “감정가/최저입찰가/차수” 2개 이상 라벨 존재 && cltrNo 일치.
+
+D) 파싱(라벨기반 + 백업 XPath)
+- 필수: case_no, address, asset_group, use_type, appraisal_price, min_bid_price, round.
+- 옵션: area_building, area_land, notice_date, pay_deadline, attachments[].
+- 위험플래그 v1(키워드): 지분/대지권없음/건물만/VAT/점유/특약.
+
+E) 네트워킹/STRICT/캐시
+- STRICT=true: 상세판정 실패/검색페이지 수신 시 parsed=null, error_code=REMOTE_HTTP_403 or EMPTY_BODY로 종료(폴백 금지).
+- RPS≤1, timeout=7s, retry≤2(지수백오프), UA/Referer/Accept-Language 고정.
+- 캐시: data/cache/{case_key}/latest.json (TTL 6h). requested_case 변경 시 무조건 미스 캐시.
+
+F) 프런트 정합
+- /onbid/parse 바디 키를 무조건 {"case": "..."}로 전송(기존 case_no 제거).
+- 400/INVALID_INPUT는 빨간 배너로 노출(에러문구 그대로), parsed=null일 땐 렌더 금지.
+- 헤더배지: "입력:{requested_case} / 응답:{case_no||onbid:<cltrNo>}". mismatch==true에서만 경고.
+
+G) 로그/가시성
+- 1라인 JSON: {req_case, case_key, step:"search|detail", url, http, page_type:"detail|search|captcha|empty", extracted:{case_no,cltrNo}, mismatch, err}.
+- /debug/raw?case_key=...: latest response.html/parsed.json 다운로드.
+
+H) AC(수락기준)
+- 2024-01774-006, 2024-06499-010 모두 detail 판정 통과, 필수 6필드 채움, mismatch=false.
+- 존재하지 않는 사건 “2024-99999-999”는 error_code=NOT_FOUND(or EMPTY_BODY)로 종료, 가짜데이터 없음.
+- 422 미발생(대신 400 INVALID_INPUT). 프론트 배너에 원인문구 표시.
+```
+
+\[스모크 커맨드(바로 실행)]
+
+```
+# 정상
+curl -sX POST :8000/api/v1/onbid/parse -H "x-api-key: dev" -H "Content-Type: application/json" \
+ -d '{"case":"2024-01774-006","force":true}' | jq '{req:.requested_case,case:.case_no,addr:.address,min:.min_bid_price,round:.round,mismatch:.mismatch,err:.error_code}'
+
+# 두 번째 정상
+curl -sX POST :8000/api/v1/onbid/parse -H "x-api-key: dev" -H "Content-Type: application/json" \
+ -d '{"case":"2024-06499-010","force":true}' | jq '{case:.case_no,addr:.address,min:.min_bid_price}'
+
+# 존재X
+curl -sX POST :8000/api/v1/onbid/parse -H "x-api-key: dev" -H "Content-Type: application/json" \
+ -d '{"case":"2024-99999-999","force":true}' | jq '{parsed:.parsed,err:.error_code,hint:.error_hint}'
+```
+
+\[다음 행동] 오늘 3개
+
+1. **스키마 통일/422→400 변환** + FE 요청키 교체(`case`), 배포.
+2. **URL 리졸버 2단계** 구현 후 위 3커맨드 스모크 캡처 공유.
+3. **mismatch 정규화 비교** 패치(접두사 제거 후 비교) + 로그에 extracted 값 노출.
+
+\[추가 필요정보]
+
+* 온비드 목록/상세 **실DOM 캡처 1건**(클트번호 위치 확인용), 스테이징 IP 제한 여부, 현재 FE가 보내는 실제 바디 샘플(네트워크 탭).

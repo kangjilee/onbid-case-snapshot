@@ -1,0 +1,135 @@
+\[요약 결론]
+지금 에러는 **백엔드 미동작/오리진 불일치(CORS/HTTPS)로 프런트가 API에 못 붙어서** 납니다. **프런트↔백엔드 동시 실행 + 프록시로 한 오리진화** 하면 즉시 해결됩니다.
+
+\[해결 패치(핵심)]
+
+* **절대경로(API\_BASE=https\://…) 제거** → **상대경로(/api/v1)** 로.
+* **Vite 프록시**로 `/api/v1 → http://localhost:8000` 터널링(프론트·백엔드 같은 오리진처럼 보이게).
+* **동시 실행 스크립트(concurrently)** 로 한 번에 띄우기(백엔드 먼저, 프런트 나중).
+
+---
+
+## \[Agent 작업요청] “백엔드 연결 불가” 종결 패치 (프록시+동시실행+가시화)
+
+**목표**
+프런트에서 “네트워크/백엔드 연결 불가”가 더는 안 뜨도록, 개발환경을 **단일 오리진**으로 정리하고 한 명령으로 동시 기동. 실패 시 원인 메시지를 한국어로 노출.
+
+### A) 프런트 설정 변경
+
+1. **환경변수**: `komacore-ui/.env`에서 절대경로 삭제
+
+```
+# 삭제: VITE_API_BASE=https://<...>/api/v1
+VITE_API_BASE=/api/v1
+VITE_API_KEY=dev
+```
+
+2. **Vite 프록시 추가**: `komacore-ui/vite.config.ts` 교체
+
+```ts
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+    strictPort: true,
+    allowedHosts: true,
+    hmr: { clientPort: 443 },
+    proxy: {
+      // ✅ 프론트 오리진에서 /api/v1을 백엔드(로컬 8000)로 프록시
+      '/api/v1': { target: 'http://localhost:8000', changeOrigin: true, secure: false }
+    }
+  },
+  preview: { host: '0.0.0.0', port: 5173, allowedHosts: true }
+});
+```
+
+3. **Axios 인스턴스**(이미 있으면 확인): `baseURL = import.meta.env.VITE_API_BASE || '/api/v1'`
+4. **에러 가시화**(이미 적용했어도 보강): Axios 응답 인터셉터에서
+
+   * `Network Error` → `"네트워크/CORS/프록시 연결 오류"`
+   * HTTP 401/403/404/5xx → `"HTTP <코드> / <서버 메시지>"`
+
+### B) 백엔드(CORS 간소화 – 개발용)
+
+`main.py` 상단에(이미 있으면 그대로 유지):
+
+```py
+from fastapi.middleware.cors import CORSMiddleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], allow_methods=["*"], allow_headers=["*"], allow_credentials=False
+)
+```
+
+> 프록시 쓰면 CORS 영향 최소지만, 개발에선 넉넉히 허용.
+
+### C) 동시 실행 스크립트(한 번에 띄우기)
+
+1. 패키지 설치:
+
+```
+cd komacore-ui
+npm i -D concurrently
+```
+
+2. `komacore-ui/package.json` 스크립트 추가/수정:
+
+```json
+{
+  "scripts": {
+    "dev:back": "uv run uvicorn main:app --host 0.0.0.0 --port 8000",
+    "dev:front": "vite --host 0.0.0.0 --port 5173",
+    "dev:all": "concurrently -k -n BACK,FRONT -c blue,green \"npm:dev:back\" \"npm:dev:front\"",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0 --port 5173"
+  }
+}
+```
+
+3. **실행**:
+
+```
+cd komacore-ui
+npm run dev:all
+```
+
+> 하나의 터미널에서 **백엔드(8000) + 프런트(5173)** 동시에 기동. 프런트는 `/api/v1`을 자동 프록시.
+
+### D) 스모크(네트워크 확인)
+
+1. **백엔드 생존**: 새 터미널
+
+```
+curl -s http://localhost:8000/api/v1/healthz
+```
+
+2. **프론트→프록시→백엔드**: 브라우저에서 프런트 열고 STEP1 “공고문 불러오기” 클릭
+
+   * 성공: 파싱 요약/배너 표시
+   * 실패: 배너에 **한국어 원인**(INVALID\_INPUT/REMOTE\_HTTP\_403/ATTACHMENT\_NONE 등)
+
+3. **절대경로 차단 검증**: 개발자도구 Network 탭에서 요청 URL이 `https://<프론트>/api/v1/...`(절대 도메인 아님)인지 확인.
+
+**완료 기준**
+
+* 더 이상 “백엔드 서버에 연결할 수 없습니다” 미발생.
+* STEP1→STEP4 전체 플로우 동작(성공 또는 pending으로 진행).
+* 실패 시 **원인/가이드 배너**가 한국어로 표시.
+
+---
+
+\[왜 이게 해결인지]
+
+* 프런트와 백엔드가 **같은 오리진처럼 동작**(프록시) → CORS/HTTPS 혼합/도메인 불일치로 인한 **Network Error 소멸**.
+* 한 명령으로 두 서버 기동 → “백엔드 꺼져 있음” 상태 방지.
+* 에러를 **문구로 노출** → 다음 단계 진행/디버깅 둘 다 쉬워짐.
+
+\[다음 행동 3개]
+
+1. 위 작업 후 **STEP1 시도 스샷**(배너/요약)과 **STEP4 결과 스샷** 확보.
+2. `.env`에 남아있는 예전 `VITE_API_BASE=https://…` 값이 있으면 **필히 제거**.
+3. 프로덕션 배포 시엔 프록시 대신 **백엔드에서 정적 빌드 서빙** 또는 **도메인 일치**로 운영.

@@ -1,0 +1,106 @@
+[목표] 온비드 실물건을 “검색/불러오기→권리플래그→시세/가정→입찰가 3안”까지 한 번에 산출. Mock은 폴백 전용.
+
+A) 입력/검색
+1) 허용 입력: 온비드 URL, 사건번호(YYYY-######-###), cltrNo(관리번호).
+2) /onbid/search (GET)
+   - q: 문자열(사건번호/주소/키워드), page(기본1)
+   - 동작: 사건번호/URL이면 즉시 상세 파싱으로 리다이렉트 힌트, 키워드는 목록 페이지 HTML 파싱해 top 10 반환.
+   - 응답: [{title, case_no?, cltr_no?, address, asset_group, round, min_bid_price, link}]
+3) case_key 정규화: URL→"onbid:<cltr_no>", 사건번호→"case:<원문>"(하이픈 유지). 숫자만 변환 금지.
+
+B) 상세수집/파싱
+1) /onbid/parse (POST) { "case":"<입력값>", "force":false }
+2) Fetch 정책: UA(Chrome), Referer=onbid, timeout=7s, retry≤2, 동시성1, RPS≤1, 랜덤슬립 800–1500ms.
+3) 차단감지: CAPTCHA/403/비정상리다이렉트→error_code=CAPTCHA_DETECTED/REMOTE_HTTP_403.
+4) 파싱 스키마(JSON 고정):
+{
+ "requested_case","case_key","case_no","source_hint",
+ "asset_group","disposal_type","use_type","address",
+ "appraisal_price","min_bid_price","round",
+ "area_building","area_land","land_right_flag","share_flag","building_only_flag","vat_flag",
+ "attachments":[{"name","url","posted_at"}],
+ "notice_date","deadline_paydays","seller_org","contact",
+ "raw_text", "error_code","error_hint","mismatch"
+}
+5) 셀렉터(라벨기반 + 백업 XPath 2중화):
+   - 금액류: //*[contains(.,'감정가')]/following::*[1] ; 최저입찰가/차수 동일
+   - 기본정보: 상세표 dt/dd 라벨 매칭(자산구분/처분방식/용도/소재지)
+   - 첨부: "첨부파일" 표 row→name/href/date
+   - 특약/본문: 상세설명 영역 text 수집→raw_text 저장
+6) 정규화:
+   - 금액 KRW→int, 면적 m²→float, round ‘3차’→3
+   - flags: {있음/없음/불명}→{true/false/null}
+7) 오매칭: requested_case ≠ (case_no || case_key) → mismatch=true + error_hint.
+
+C) 권리·세금 플래그 엔진
+1) 규칙 키워드(원문/특약/첨부명에서 탐지):
+   - 지분: "지분", "공유", "일부지분"
+   - 대지권 없음: "대지권 없음", "대지권 미등기"
+   - 건물만: "건물만", "토지 제외"
+   - 임차인 인수: "보증금 인수", "대항력", "배분요구 종기 후"
+   - 부가세: "부가가치세 별도", "VAT 별도"
+   - 점유: "점유", "사용중", "명도", "인도조건"
+2) 엔진 출력:
+   rights_summary: {base_lien_hint?, tenant_risk?, tax_priority?, pay_deadline?}
+   risk_flags: {share, no_land_right, building_only, tenant_seniority, vat, occupancy, special_terms}
+3) 배분요구종기/대금납부기한 추출: ‘배분(배당)요구 종기’, ‘대금납부기한’ 라벨 텍스트를 날짜로 파싱.
+
+D) 시세/가정 입력(프런트)
+1) /analyze (POST) 입력모델
+{
+ "rent_month":int, "vacancy_rate":float, "mgmt_fee":int,
+ "tax_year":int, "ins_year":int,
+ "capex_once":int, "ltv":float, "interest_rate":float,
+ "other_cost_month":int, "target_yield":float
+}
+2) 프리셋(없으면 기본):
+   오피스텔: 공실 7%, mgmt 12만, tax_year 0.18% 공시, 보험 10만/년
+   근린상가: 공실 10%, mgmt 8만, tax_year 0.25%, 보험 15만/년
+   공장: 공실 12%, mgmt 15만, tax_year 0.30%, 보험 20만/년
+
+E) 입찰가 산출 로직(/bidprice POST)
+입력: parsed.min_bid_price, round, analyze 입력.
+1) 공식을 고정:
+   - 총투입 = 낙찰가 + 취득/등기/인지(=낙찰가×0.05 가정) + capex_once − 대출(낙찰가×ltv)
+   - 월자금비용 = (낙찰가×ltv×interest_rate/12)
+   - 월순익 = (rent_month − mgmt_fee − other_cost_month − 공실비용(rent_month×vacancy_rate) − 월세금(=tax_year/12) − 보험(=ins_year/12) − 월자금비용)
+   - 연순익 = 월순익×12
+   - 단순수익률 = 연순익 / 총투입
+2) 목표가 역산:
+   - 목표가 = (목표연순익 ÷ 목표수익률) 역산
+   - 또는 월순익 목표가 있으면 낙찰가를 이분법으로 수렴(±1만원, 30회 이내)
+3) 3안 산출:
+   - 보수적: target_yield +1.5%p
+   - 주력:   target_yield
+   - 공격적: target_yield −1.0%p
+   각 안마다 낙찰가를 수치해석으로 구해 {bid_price, total_in, net_month, yield_year} 반환.
+4) 제약:
+   - bid_price ≥ parsed.min_bid_price
+   - round≥2면 추가 하락 고려 옵션(min_bid_next= min_bid_price×0.8 등)은 별도 파라미터 allow_next_round로.
+
+F) API 계약 요약
+- GET  /onbid/search?q=...&page=1
+- POST /onbid/parse {"case":"...", "force":false}
+- POST /analyze {...} → 서버 검증만(프리셋/경계값) 후 그대로 /bidprice에 전달해도 OK
+- POST /bidprice {"case_key":"...", "min_bid_price":int, "analyze":{...}} → {scenarios:[{tier,bid_price,total_in,net_month,yield_year}], "cap":"권장 상한가", "notes":[리스크요약]}
+
+G) 저장/캐시
+- data/raw/{case_key}/{ts}/response.html, parsed.json
+- data/cache/{case_key}/latest.json (TTL 6h). force=true면 무시.
+- 로그: logs/onbid_parser.log(rolling 10MB×5)
+
+H) 프런트 연동(정합성+UX)
+1) STEP1: 검색창(사건/주소/키워드) + 결과리스트; URL/사건번호 입력 시 바로 /parse 호출.
+2) 헤더 배지: "입력:{requested_case} / 응답:{case_no||case_key}" — 불일치 시 빨간배너 + “강제 새로수집(force)” 버튼.
+3) STEP2: risk_flags 시각화 + “안전등급(Safe/Cond/Risky)” 계산(가중치: no_land_right/건물만=−3, 지분=−3, 임차대학력=−2, VAT/특약=−1…).
+4) STEP3: 시세·가정 입력폼(프리셋 버튼 + 저장/불러오기).
+5) STEP4: 3카드(보수/주력/공격) + ROI 차트 + 권장 상한가 + “입찰서 출력(요약)”.
+
+I) 에러/폴백(항상 200)
+- error_code: {INVALID_INPUT, REMOTE_HTTP_40X, REMOTE_HTTP_50X, TIMEOUT, CAPTCHA_DETECTED, PARSE_MISSING_FIELD, ATTACHMENT_NONE, MISMATCH}
+- parsed=null이면 UI에 error_hint 표시, 진행은 가능(가정 수동 입력).
+- CAPTCHA_DETECTED는 Mock 폴백 금지(정책 준수).
+
+J) 보안/컴플라이언스
+- 사용자 트리거형만 수집(크론 금지), RPS≤1 강제, 개인정보(연락처 등) 저장 시 마스킹/30일 보존.
+- 제휴/공식 API 확보 시 파서→API로 전환 플래그 지원.

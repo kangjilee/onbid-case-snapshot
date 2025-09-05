@@ -1,0 +1,20 @@
+{
+  "url": null,
+  "case_no": "2024-01774-009",
+  "content": "\n            국유재산 매각 공고  \n            사건번호: 2024-01774-009\n            용도: 오피스텔\n            소재지: 경기도 성남시 분당구 정자동 67-89\n            감정가: 3억 8000만원\n            최저입찰가: 2억 6600만원 (1회차)\n            건물만 매각 (토지 제외)\n            대지권 미등기 상태\n            ",
+  "extracted_data": {
+    "asset_type": "국유재산",
+    "use_type": "오피스텔",
+    "address": "경기도 성남시 분당구 정자동 67-89",
+    "appraisal": 380000000.0,
+    "min_bid": 266000000.0,
+    "round": 1,
+    "areas": {
+      "land_right": false
+    }
+  },
+  "attachment_state": "NONE",
+  "status": "pending",
+  "parsed_at": "2025-08-28T03:23:02.869765",
+  "case_key": "2024-01774-009"
+}
