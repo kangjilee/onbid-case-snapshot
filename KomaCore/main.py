@@ -1,3 +1,12 @@
+# main.py
+import core.logging_patch  # noqa
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from core.config import IS_PROD, CORS_ORIGINS, RATE_LIMIT
+from core.security import api_key_enforcer
+
 import os
 import time
 import logging
@@ -7,12 +16,9 @@ from datetime import datetime
 from typing import Optional, Dict, Any
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, Header, Depends, Request, Response
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import HTTPException, Header, Depends, Request, Response
 from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.exceptions import RequestValidationError
-from slowapi import Limiter, _rate_limit_exceeded_handler
-from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from starlette.middleware.base import BaseHTTPMiddleware
 from dotenv import load_dotenv
@@ -46,7 +52,6 @@ DSR_CAP_SALARIED = get_env_float("DSR_CAP_SALARIED", 0.40)
 DSR_CAP_SELFEMP = get_env_float("DSR_CAP_SELFEMP", 0.30)
 STRESS_RATE_FLOOR = get_env_float("STRESS_RATE_FLOOR", 0.07)
 LTV_CAP_DEFAULT = get_env_float("LTV_CAP_DEFAULT", 0.50)
-CORS_ORIGINS = [origin.strip() for origin in os.getenv("CORS_ORIGINS", "*").split(",") if origin.strip()]
 RATE_LIMIT_PER_MIN = int(os.getenv("RATE_LIMIT_PER_MIN", "60"))
 
 # Configure logging
@@ -56,35 +61,29 @@ logging.basicConfig(
 )
 logger = logging.getLogger("komacore")
 
-# Initialize rate limiter
-limiter = Limiter(key_func=get_remote_address)
-
-# Initialize FastAPI app with conditional docs
-docs_config = {}
-if ENV == "prod":
-    docs_config = {
-        "docs_url": None,
-        "redoc_url": None,
-        "openapi_url": None
-    }
-else:
-    docs_config = {
-        "docs_url": "/docs",
-        "redoc_url": "/redoc", 
-        "openapi_url": "/openapi.json"
-    }
+limiter = Limiter(key_func=lambda req: req.headers.get("X-API-KEY") or get_remote_address(req))
 
 app = FastAPI(
     title="KomaCore",
-    description="부동산 투자 분석 API",
-    version=APP_VERSION,
-    docs_url=docs_config.get("docs_url"),
-    redoc_url=docs_config.get("redoc_url"),
-    openapi_url=docs_config.get("openapi_url")
+    docs_url=None if IS_PROD else "/docs",
+    redoc_url=None if IS_PROD else "/redoc",
 )
 
-# Add rate limiting
 app.state.limiter = limiter
+app.add_exception_handler(429, _rate_limit_exceeded_handler)
+
+if CORS_ORIGINS:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=CORS_ORIGINS,
+        allow_methods=["GET","POST","OPTIONS"],
+        allow_headers=["*"],
+        allow_credentials=True,
+    )
+
+@app.middleware("http")
+async def _enforce(request, call_next):
+    return await api_key_enforcer(request, call_next)
 
 # Request tracing middleware
 class RequestTracingMiddleware(BaseHTTPMiddleware):
@@ -111,16 +110,6 @@ class RequestTracingMiddleware(BaseHTTPMiddleware):
         return response
 
 app.add_middleware(RequestTracingMiddleware)
-
-# Add CORS middleware with development-friendly settings
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["*"],
-    allow_credentials=False,
-    max_age=600
-)
 
 # Override default rate limit handler
 @app.exception_handler(RateLimitExceeded)
@@ -174,16 +163,8 @@ async def root():
             }
         )
 
-@app.get("/api/v1/healthz", response_model=HealthResponse)
-@limiter.limit(f"{RATE_LIMIT_PER_MIN}/minute")
-async def health_check(request: Request):
-    """Enhanced health check endpoint with uptime and version (public)"""
-    uptime_s = time.time() - APP_START_TIME
-    return HealthResponse(
-        status="ok",
-        version=APP_VERSION,
-        uptime_s=round(uptime_s, 2)
-    )
+@app.get("/healthz")
+def healthz(): return {"ok": True}
 
 @app.get("/api/v1/meta", response_model=MetaResponse)
 @limiter.limit(f"{RATE_LIMIT_PER_MIN}/minute")
