@@ -26,19 +26,20 @@ st.set_page_config(
     layout="wide"
 )
 
-# 상단 배지
-api_key = os.getenv('ONBID_KEY')
-mode = "LIVE" if api_key else "MOCK"
+# 상단 배지 - 단일 키 체크 버그 수정
+KEY_ONBID = os.getenv("ONBID_KEY_ONBID","").strip()
+KEY_DATA  = os.getenv("ONBID_KEY_DATA","").strip()
+MODE = "LIVE" if (KEY_ONBID or KEY_DATA) else "MOCK"
 updated_at = datetime.now().strftime("%H:%M:%S")
 
 col_badge1, col_badge2, col_badge3 = st.columns([1, 1, 2])
 with col_badge1:
     st.success("✅ OK: app running")
 with col_badge2:
-    if mode == "MOCK":
-        st.warning(f"⚠️ {mode}")
+    if MODE == "MOCK":
+        st.warning(f"⚠️ {MODE}")
     else:
-        st.success(f"🔑 {mode}")
+        st.success(f"🔑 {MODE}")
 with col_badge3:
     st.info(f"🕒 updated: {updated_at}")
 
@@ -64,65 +65,129 @@ with st.sidebar:
 col1, col2 = st.columns([3, 1])
 
 with col1:
-    raw_input = st.text_input(
-        "공매번호 또는 온비드 링크",
-        placeholder="예: 12345678 또는 onbid.co.kr/... 링크",
-        help="공매번호만 입력하거나 온비드 페이지 전체 URL 붙여넣기"
+    user_in = st.text_input(
+        "관리번호 / 공고-물건 / 공고번호 / 온비드 URL",
+        placeholder="예: 2016-0500-000201, 2024-01774-006, 202401774",
+        help="관리번호, 공고-물건번호, 공고번호 또는 온비드 URL 입력"
     )
 
 with col2:
     analyze_btn = st.button("🔍 분석하기", type="primary", use_container_width=True)
 
-# 분석 실행
-if analyze_btn and raw_input.strip():
+# 분석 실행 - 간소화된 버전
+if analyze_btn and user_in.strip():
+    from corex.onbid_api import fetch_onbid
+    
+    # 요청 시도 URL 표시 처리
+    if st.toggle("🔍 요청 URL 표시"):
+        st.code(f"입력값: {user_in.strip()}")
+    
     with st.spinner("📡 온비드 조회 중..."):
-        try:
-            # 1) 새로운 온비드 API 시스템 호출
-            from corex.onbid_api import fetch_onbid
-            from corex.onbid_parse import normalize_unify_item
-            from corex.schema import NoticeOut
+        norm, meta = fetch_onbid(user_in.strip())
+        
+        # 요청 시도 URL 표시
+        if meta.get("tried_urls"):
+            with st.expander("📡 요청 시도 URL"):
+                for u in meta["tried_urls"]:
+                    st.code(u.replace(KEY_ONBID,"***").replace(KEY_DATA,"***"))
+        
+        if meta["ok"]:
+            normalized_data = norm
+            c1,c2,c3 = st.columns(3)
+            c1.metric("최저가", f"{norm['min_price']:,.0f}원" if norm["min_price"] else "-")
+            c2.metric("면적", f"{norm['area_m2']:.1f}㎡ ({norm['area_p']}평)" if norm["area_m2"] else "-")
+            c3.metric("차수", norm.get("round") or "-")
             
-            logger.info(f"입력값: {raw_input.strip()}")
+            st.success("✅ LIVE 조회 성공")
+            st.json(norm)  # 전체 데이터 표시
             
-            # 2) 온비드 API 호출 (브라우저 헤더 + XML 전용 + 다중 재시도)
-            item, meta = fetch_onbid(raw_input.strip())
-            
-            if meta["ok"]:
-                st.success(f"✅ 온비드 데이터 LIVE 조회 성공! (도메인: {meta.get('domain', 'unknown')})")
-                logger.info(f"API 성공: {meta.get('domain', 'unknown')}")
+        else:
+            st.error(f"온비드 조회 실패: {meta['error'] or '네트워크 차단 가능성'}")
+            st.warning("사내망 차단 감지 시 MOCK 데이터로 계속 진행합니다.")
+
+elif analyze_btn and not user_in.strip():
+    st.warning("⚠️ 공매번호를 입력해주세요")
+
+# 하단 정보
+st.divider()
+col_info1, col_info2, col_info3 = st.columns(3)
+
+with col_info1:
+    st.caption("💡 **사용법**")
+    st.caption("공매번호 입력 → 분석하기 클릭")
+
+with col_info2:
+    st.caption("⚙️ **현재 모드**")
+    st.caption(f"{MODE} ({'실시간 조회' if MODE=='LIVE' else 'API키 없음'})")
+
+with col_info3:
+    st.caption("🔧 **설정**") 
+    st.caption(f"목표수익률: {target_yield}% | 대출: {loan_ratio}%")
+
+# 초기 로딩 메시지
+if not user_in and 'app_loaded' not in st.session_state:
+    st.session_state.app_loaded = True
+    st.info("✅ KOMA 공매 도우미가 실행되었습니다. 공매번호를 입력하여 분석을 시작하세요.")
+                normalized_data = norm  # UI 참조 변수 통일
+                st.success("✅ LIVE 조회 성공")
                 
-                # 3) 새로운 관대한 파서로 정규화
-                normalized_data = normalize_unify_item(item)
+                # 상단 메트릭 표시
+                c1, c2, c3 = st.columns(3)
+                c1.metric("최저가", f"{norm['min_price']:,.0f}원" if norm["min_price"] else "-")
+                c2.metric("전유면적", f"{norm['area_m2']:.1f}㎡ ({norm['area_p']}평)" if norm["area_m2"] else "-")
+                c3.metric("차수", norm.get("round") or "-")
+                
+                st.session_state["live_payload"] = norm
                 
                 # 4) 기존 스키마 호환성을 위한 변환
                 notice = NoticeOut(
-                    asset_type=normalized_data.get("use", "기타"),
-                    use_type="상업용" if "상가" in (normalized_data.get("use") or "") else "주거용",
+                    asset_type=norm.get("use", "기타"),
+                    use_type="상업용" if "상가" in (norm.get("use") or "") else "주거용",
                     has_land_right=True,
                     is_share=False,
                     building_only=False,
-                    area_m2=normalized_data.get("area_m2") or 0,
-                    min_price=int(normalized_data.get("min_price", 0) / 10000) if normalized_data.get("min_price") else 0,
-                    round_no=int(normalized_data.get("round", 1)) if normalized_data.get("round") else 1,
+                    area_m2=norm.get("area_m2") or 0,
+                    min_price=int(norm.get("min_price", 0) / 10000) if norm.get("min_price") else 0,
+                    round_no=int(norm.get("round", 1)) if norm.get("round") else 1,
                     dist_deadline=None,
                     pay_deadline_days=40,
                     ids={
-                        "PLNM_NO": normalized_data.get("plnm_no"),
-                        "CLTR_NO": normalized_data.get("cltr_no"),
-                        "CLTR_MNMT_NO": normalized_data.get("mnmt_no"),
+                        "PLNM_NO": norm.get("plnm_no"),
+                        "CLTR_NO": norm.get("cltr_no"),
+                        "CLTR_MNMT_NO": norm.get("mnmt_no"),
                     }
                 )
                 
-                # 4) 시세 추정
+                # 5) 시세 추정
                 price = quick_price(notice)
-                
-                # 모드 업데이트
                 current_mode = "LIVE"
             else:
-                st.error(f"🚫 온비드 조회 실패: {meta.get('error', 'Unknown error')}")
-                st.info("⚠️ MOCK 데이터로 계속 진행합니다")
+                normalized_data = None
+                error_msg = meta.get("error", "Unknown error")
                 
-                # MOCK 폴백 - 간단한 기본값 사용
+                # 실패문구 처리
+                if error_msg == "KEY_NOT_REGISTERED":
+                    st.error("🔑 키-도메인 불일치 또는 미승인 서비스")
+                    st.warning("💡 onbid/data.go.kr 키와 엔드포인트를 확인하세요")
+                elif error_msg == "NO_ITEMS":
+                    st.error("📋 조회 결과 없음")
+                    st.warning("💡 번호 형식·차수·기간을 확인하세요")
+                elif "HTTPStatusError" in error_msg and "500" in error_msg:
+                    st.error("🔴 data.go.kr 점검/미승인/쿼터초과")
+                    st.info("📡 onbid 도메인으로 자동 전환 시도됨")
+                else:
+                    st.error(f"❌ 온비드 조회 실패: {error_msg}")
+                
+                # 요청 URL 표시
+                if meta.get("tried_urls"):
+                    st.subheader("📡 요청 시도 URL")
+                    for u in meta["tried_urls"]:
+                        masked_url = u.replace(KEY_ONBID,'***').replace(KEY_DATA,'***')
+                        st.code(masked_url)
+                        
+                st.warning("⚠️ MOCK 데이터로 계속 진행합니다")
+                
+                # MOCK 폴백
                 notice = NoticeOut(
                     asset_type="아파트", use_type="주거용", has_land_right=True,
                     is_share=False, building_only=False, area_m2=84.5, min_price=25000,
@@ -131,7 +196,7 @@ if analyze_btn and raw_input.strip():
                 price = quick_price(notice)
                 current_mode = "MOCK"
             
-            # 3) 권리 분석
+            # 6) 권리 분석
             rights = summarize_rights(notice)
             
             # 4) 입찰가 시나리오
@@ -163,31 +228,33 @@ if analyze_btn and raw_input.strip():
             # ===== 결과 표시 =====
             st.success("✅ 분석 완료!")
             
-            # 기본 정보 - LIVE 데이터로 표시
-            st.subheader("📋 기본 정보 (LIVE)")
+            # 기본 정보 표시
+            mode_text = "LIVE" if current_mode == "LIVE" else "MOCK"
+            st.subheader(f"📋 기본 정보 ({mode_text})")
             info_cols = st.columns(5)
             
             with info_cols[0]:
-                display_type = normalized_data.get("use") or notice.asset_type or "미상"
+                display_type = (normalized_data and normalized_data.get("use")) or notice.asset_type or "미상"
                 st.metric("물건유형", display_type)
             with info_cols[1]:
                 st.metric("용도", notice.use_type or "미상")
             with info_cols[2]:
-                if normalized_data.get("area_m2"):
+                if normalized_data and normalized_data.get("area_m2"):
                     area_text = f"{normalized_data['area_m2']:.1f}㎡"
                     if normalized_data.get("area_p"):
                         area_text += f" ({normalized_data['area_p']}평)"
                     st.metric("면적", area_text)
                 else:
-                    st.metric("면적", "미상")
+                    area_text = f"{notice.area_m2:.1f}㎡" if notice.area_m2 else "미상"
+                    st.metric("면적", area_text)
             with info_cols[3]:
-                if normalized_data.get("min_price"):
+                if normalized_data and normalized_data.get("min_price"):
                     price_won = int(normalized_data["min_price"])
                     st.metric("최저가", f"{price_won:,}원")
                 else:
-                    st.metric("최저가", "미상")
+                    st.metric("최저가", format_currency(notice.min_price) if notice.min_price else "미상")
             with info_cols[4]:
-                round_text = str(normalized_data.get("round", "미상"))
+                round_text = (normalized_data and normalized_data.get("round")) or str(notice.round_no) or "미상"
                 st.metric("차수", f"{round_text}회차" if round_text != "미상" else "미상")
             
             # 권리 분석
@@ -321,7 +388,7 @@ with col_info1:
 
 with col_info2:
     st.caption("⚙️ **현재 모드**")
-    st.caption(f"{mode} ({'실시간 조회' if mode=='LIVE' else 'API키 없음'})")
+    st.caption(f"{MODE} ({'실시간 조회' if MODE=='LIVE' else 'API키 없음'})")
 
 with col_info3:
     st.caption("🔧 **설정**")
