@@ -17,7 +17,7 @@ from typing import Optional, Dict, Any
 from pathlib import Path
 
 from fastapi import HTTPException, Header, Depends, Request, Response
-from fastapi.responses import RedirectResponse, JSONResponse
+from fastapi.responses import RedirectResponse, JSONResponse, PlainTextResponse
 from fastapi.exceptions import RequestValidationError
 from slowapi.errors import RateLimitExceeded
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -148,20 +148,11 @@ async def validate_api_key_optional(x_api_key: Optional[str] = Header(None)):
 # Root endpoint handling
 @app.get("/", include_in_schema=False)
 async def root():
-    """Root endpoint - redirect to docs in dev, return info in prod"""
+    """Root endpoint - redirect to docs in dev, return OK in prod"""
     if ENV == "dev":
         return RedirectResponse("/docs")
     else:
-        return JSONResponse(
-            status_code=404,
-            content={
-                "success": False,
-                "error": {
-                    "code": "NOT_FOUND",
-                    "msg": "API documentation not available in production"
-                }
-            }
-        )
+        return PlainTextResponse("OK: backend running (prod)")
 
 @app.get("/healthz")
 def healthz(): return {"ok": True}
