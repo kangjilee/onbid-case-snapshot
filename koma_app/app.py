@@ -77,35 +77,59 @@ with col2:
 if analyze_btn and raw_input.strip():
     with st.spinner("📡 온비드 조회 중..."):
         try:
-            # 1) 입력 파싱 - 새로운 자동 판별 시스템
-            ids = parse_input(raw_input.strip())
-            logger.info(f"입력 파싱 결과: {ids}")
+            # 1) 새로운 온비드 API 시스템 호출
+            from corex.onbid_api import fetch_onbid
+            from corex.onbid_parse import normalize_unify_item
+            from corex.schema import NoticeOut
             
-            # 2) 비동기 API 호출 - 새로운 다중쿼리 시스템
-            async def run_analysis():
-                from corex.onbid_client import fetch_unify_by_any, normalize_unify
+            logger.info(f"입력값: {raw_input.strip()}")
+            
+            # 2) 온비드 API 호출 (브라우저 헤더 + XML 전용 + 다중 재시도)
+            item, meta = fetch_onbid(raw_input.strip())
+            
+            if meta["ok"]:
+                st.success(f"✅ 온비드 데이터 LIVE 조회 성공! (도메인: {meta.get('domain', 'unknown')})")
+                logger.info(f"API 성공: {meta.get('domain', 'unknown')}")
                 
-                # 온비드 API 호출 (다중 재시도)
-                unify_data = await fetch_unify_by_any(ids)
-                normalized = normalize_unify(unify_data)
+                # 3) 새로운 관대한 파서로 정규화
+                normalized_data = normalize_unify_item(item)
                 
-                # NoticeOut 객체 생성
-                from corex.schema import NoticeOut
-                notice = NoticeOut(**normalized)
+                # 4) 기존 스키마 호환성을 위한 변환
+                notice = NoticeOut(
+                    asset_type=normalized_data.get("use", "기타"),
+                    use_type="상업용" if "상가" in (normalized_data.get("use") or "") else "주거용",
+                    has_land_right=True,
+                    is_share=False,
+                    building_only=False,
+                    area_m2=normalized_data.get("area_m2") or 0,
+                    min_price=int(normalized_data.get("min_price", 0) / 10000) if normalized_data.get("min_price") else 0,
+                    round_no=int(normalized_data.get("round", 1)) if normalized_data.get("round") else 1,
+                    dist_deadline=None,
+                    pay_deadline_days=40,
+                    ids={
+                        "PLNM_NO": normalized_data.get("plnm_no"),
+                        "CLTR_NO": normalized_data.get("cltr_no"),
+                        "CLTR_MNMT_NO": normalized_data.get("mnmt_no"),
+                    }
+                )
                 
-                # 시세 추정
+                # 4) 시세 추정
                 price = quick_price(notice)
                 
-                return notice, price
-            
-            # 이벤트 루프 실행
-            try:
-                loop = asyncio.get_event_loop()
-            except RuntimeError:
-                loop = asyncio.new_event_loop()
-                asyncio.set_event_loop(loop)
-            
-            notice, price = loop.run_until_complete(run_analysis())
+                # 모드 업데이트
+                current_mode = "LIVE"
+            else:
+                st.error(f"🚫 온비드 조회 실패: {meta.get('error', 'Unknown error')}")
+                st.info("⚠️ MOCK 데이터로 계속 진행합니다")
+                
+                # MOCK 폴백 - 간단한 기본값 사용
+                notice = NoticeOut(
+                    asset_type="아파트", use_type="주거용", has_land_right=True,
+                    is_share=False, building_only=False, area_m2=84.5, min_price=25000,
+                    round_no=1, dist_deadline=None, pay_deadline_days=40, ids={}
+                )
+                price = quick_price(notice)
+                current_mode = "MOCK"
             
             # 3) 권리 분석
             rights = summarize_rights(notice)
@@ -120,9 +144,7 @@ if analyze_btn and raw_input.strip():
                 vacancy=vacancy_rate
             )
             
-            # 모드 상태 업데이트
-            from corex.onbid_client import MOCK_MODE
-            current_mode = "MOCK" if MOCK_MODE else "LIVE"
+            # 모드 상태는 위에서 이미 설정됨 (current_mode)
             
             # 결과 번들
             result = BundleOut(
@@ -134,25 +156,39 @@ if analyze_btn and raw_input.strip():
                     "mode": current_mode.lower(),
                     "updated_at": datetime.now().isoformat(),
                     "quick_mode": quick_mode,
-                    "input_parsed": ids
+                    "api_meta": meta if 'meta' in locals() else {}
                 }
             )
             
             # ===== 결과 표시 =====
             st.success("✅ 분석 완료!")
             
-            # 기본 정보
-            st.subheader("📋 기본 정보")
-            info_cols = st.columns(4)
+            # 기본 정보 - LIVE 데이터로 표시
+            st.subheader("📋 기본 정보 (LIVE)")
+            info_cols = st.columns(5)
             
             with info_cols[0]:
-                st.metric("물건유형", notice.asset_type or "미상")
+                display_type = normalized_data.get("use") or notice.asset_type or "미상"
+                st.metric("물건유형", display_type)
             with info_cols[1]:
                 st.metric("용도", notice.use_type or "미상")
             with info_cols[2]:
-                st.metric("면적", f"{notice.area_m2:.1f}㎡" if notice.area_m2 else "미상")
+                if normalized_data.get("area_m2"):
+                    area_text = f"{normalized_data['area_m2']:.1f}㎡"
+                    if normalized_data.get("area_p"):
+                        area_text += f" ({normalized_data['area_p']}평)"
+                    st.metric("면적", area_text)
+                else:
+                    st.metric("면적", "미상")
             with info_cols[3]:
-                st.metric("최저가", format_currency(notice.min_price) if notice.min_price else "미상")
+                if normalized_data.get("min_price"):
+                    price_won = int(normalized_data["min_price"])
+                    st.metric("최저가", f"{price_won:,}원")
+                else:
+                    st.metric("최저가", "미상")
+            with info_cols[4]:
+                round_text = str(normalized_data.get("round", "미상"))
+                st.metric("차수", f"{round_text}회차" if round_text != "미상" else "미상")
             
             # 권리 분석
             st.subheader("⚖️ 권리 분석")
@@ -212,25 +248,43 @@ if analyze_btn and raw_input.strip():
             
             # 상세정보
             if st.toggle("🔍 상세정보"):
-                st.json({
+                detail_data = {
                     "모드": result.meta["mode"],
                     "업데이트": result.meta["updated_at"][:19],
                     "빠른판독": result.meta["quick_mode"],
                     "ID정보": {k: v for k, v in notice.ids.items() if v}
-                })
+                }
+                
+                # LIVE 데이터 원본 키 정보 추가
+                if "normalized_data" in locals() and normalized_data.get("_raw_keys"):
+                    detail_data["LIVE_원본키"] = f"{len(normalized_data['_raw_keys'])}개 필드"
+                    detail_data["주요_필드"] = {
+                        k: v for k, v in normalized_data.items() 
+                        if k not in ("_raw_keys",) and v is not None
+                    }
+                
+                st.json(detail_data)
                 
         except Exception as e:
             logger.error(f"분석 실패: {e}", exc_info=True)
             
-            # 상세한 오류 토스트
-            if "온비드 조회 실패" in str(e):
-                st.error(f"🚫 온비드 조회 실패: {str(e)}")
+            # 상세한 오류 정보 표시
+            error_str = str(e)
+            if "온비드 조회 실패" in error_str:
+                st.error(f"🚫 온비드 조회 실패")
                 st.warning("💡 입력값을 확인하고 다시 시도해주세요")
-            elif "500" in str(e) or "Internal Server Error" in str(e):
+                
+                # 실패 본문 스니펫 표시 (키 마스킹)
+                if st.toggle("🔍 오류 상세보기"):
+                    masked_error = error_str.replace("803384ef46f232804e8172a734b774a10eb5a3f854d91d1ce3ba38960bb1cee4", "***KEY***")
+                    st.code(masked_error[:300] + "..." if len(masked_error) > 300 else masked_error)
+                    
+            elif "500" in error_str or "Internal Server Error" in error_str:
                 st.error("🔴 서버 오류 (500): 잘못된 파라미터일 가능성이 높습니다")
+                ids = parse_input(raw_input.strip()) if 'parse_input' in locals() else {}
                 st.warning(f"⚠️ 파싱 결과: {ids}")
             else:
-                st.error(f"❌ 분석 실패: {str(e)}")
+                st.error(f"❌ 분석 실패: {error_str[:100]}...")
             
             # 네트워크 실패 시 경고 + 폴백 (앱 멈추지 않음)
             st.warning("⚠️ 오류 발생 - 예시 데이터로 표시")
