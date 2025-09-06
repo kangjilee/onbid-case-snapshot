@@ -1,6 +1,7 @@
 import streamlit as st
 import asyncio
 import os
+import logging
 from datetime import datetime
 from dotenv import load_dotenv
 
@@ -13,6 +14,10 @@ from corex.utils import parse_input, format_currency
 
 # 환경 변수 로드
 load_dotenv()
+
+# 로깅 설정
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 # 페이지 설정
 st.set_page_config(
@@ -72,16 +77,21 @@ with col2:
 if analyze_btn and raw_input.strip():
     with st.spinner("📡 온비드 조회 중..."):
         try:
-            # 1) 입력 파싱
-            id_type, number = parse_input(raw_input.strip())
+            # 1) 입력 파싱 - 새로운 자동 판별 시스템
+            ids = parse_input(raw_input.strip())
+            logger.info(f"입력 파싱 결과: {ids}")
             
-            # 2) 비동기 병렬 처리
+            # 2) 비동기 API 호출 - 새로운 다중쿼리 시스템
             async def run_analysis():
-                client = OnbidClient()
+                from corex.onbid_client import fetch_unify_by_any, normalize_unify
                 
-                # 온비드 API 호출
-                unify_data = await client.get_unify_by_mgmt(number)
-                notice = client.normalize_unify(unify_data)
+                # 온비드 API 호출 (다중 재시도)
+                unify_data = await fetch_unify_by_any(ids)
+                normalized = normalize_unify(unify_data)
+                
+                # NoticeOut 객체 생성
+                from corex.schema import NoticeOut
+                notice = NoticeOut(**normalized)
                 
                 # 시세 추정
                 price = quick_price(notice)
@@ -110,6 +120,10 @@ if analyze_btn and raw_input.strip():
                 vacancy=vacancy_rate
             )
             
+            # 모드 상태 업데이트
+            from corex.onbid_client import MOCK_MODE
+            current_mode = "MOCK" if MOCK_MODE else "LIVE"
+            
             # 결과 번들
             result = BundleOut(
                 notice=notice,
@@ -117,9 +131,10 @@ if analyze_btn and raw_input.strip():
                 rights=rights,
                 bids=bid_plans,
                 meta={
-                    "mode": mode.lower(),
+                    "mode": current_mode.lower(),
                     "updated_at": datetime.now().isoformat(),
-                    "quick_mode": quick_mode
+                    "quick_mode": quick_mode,
+                    "input_parsed": ids
                 }
             )
             
@@ -205,10 +220,20 @@ if analyze_btn and raw_input.strip():
                 })
                 
         except Exception as e:
-            st.error(f"❌ 분석 실패: {str(e)}")
+            logger.error(f"분석 실패: {e}", exc_info=True)
             
-            # 네트워크 실패 시 경고 + 폴백
-            st.warning("⚠️ 네트워크 오류 - 캐시 또는 예시 데이터로 표시")
+            # 상세한 오류 토스트
+            if "온비드 조회 실패" in str(e):
+                st.error(f"🚫 온비드 조회 실패: {str(e)}")
+                st.warning("💡 입력값을 확인하고 다시 시도해주세요")
+            elif "500" in str(e) or "Internal Server Error" in str(e):
+                st.error("🔴 서버 오류 (500): 잘못된 파라미터일 가능성이 높습니다")
+                st.warning(f"⚠️ 파싱 결과: {ids}")
+            else:
+                st.error(f"❌ 분석 실패: {str(e)}")
+            
+            # 네트워크 실패 시 경고 + 폴백 (앱 멈추지 않음)
+            st.warning("⚠️ 오류 발생 - 예시 데이터로 표시")
             
             # 폴백 데이터
             st.subheader("📋 예시 데이터")

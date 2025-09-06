@@ -1,44 +1,53 @@
 import re
+import urllib.parse
 from cachetools import TTLCache
-from typing import Tuple
+from typing import Dict, Any
 
 
 # 6시간 TTL 캐시
 cache = TTLCache(maxsize=5000, ttl=6*3600)
 
 
-def parse_input(raw: str) -> Tuple[str, str]:
+def parse_input(raw: str) -> Dict[str, Any]:
     """
-    공매번호 유형 판별 및 정규화
-    Returns: (id_type, normalized_number)
+    공매번호 유형 자동 판별 및 정규화
+    Returns: dict with kind and appropriate parameters
     """
-    raw = raw.strip()
+    s = raw.strip()
     
-    # URL에서 번호 추출
-    if 'onbid.co.kr' in raw:
-        patterns = [
-            (r'PLNM_NO=(\d+)', 'PLNM_NO'),
-            (r'PBCT_NO=(\d+)', 'PBCT_NO'),
-            (r'CLTR_NO=(\d+)', 'CLTR_NO'),
-            (r'CLTR_MNMT_NO=(\d+)', 'CLTR_MNMT_NO')
-        ]
+    # 온비드 URL에서 번호 추출
+    if s.startswith("http"):
+        q = urllib.parse.urlparse(s)
+        qs = urllib.parse.parse_qs(q.query)
         
-        for pattern, id_type in patterns:
-            match = re.search(pattern, raw)
-            if match:
-                return id_type, match.group(1)
+        # 관리번호 우선
+        for k in ("CLTR_MNMT_NO", "cltr_mnmt_no"):
+            if k in qs: 
+                return {"kind": "CLTR_MNMT_NO", "CLTR_MNMT_NO": qs[k][0]}
+        
+        # 공고번호 + 물건번호
+        for k in ("PLNM_NO", "plnm_no"):
+            if k in qs:
+                plnm = qs[k][0]
+                cltr = qs.get("CLTR_NO", qs.get("cltr_no", ["1"]))[0]
+                return {"kind": "PLNM_CLTR", "PLNM_NO": plnm, "CLTR_NO": str(int(cltr))}
     
-    # 숫자만 있는 경우 - 길이로 추정
-    number_only = re.sub(r'\D', '', raw)
-    if number_only:
-        if len(number_only) >= 10:
-            return 'PLNM_NO', number_only
-        elif len(number_only) >= 8:
-            return 'PBCT_NO', number_only
-        else:
-            return 'CLTR_MNMT_NO', number_only
+    # 물건관리번호 YYYY-####-######
+    if re.fullmatch(r"\d{4}-\d{4}-\d{6}", s):
+        return {"kind": "CLTR_MNMT_NO", "CLTR_MNMT_NO": s}
     
-    return 'PLNM_NO', raw
+    # 공고번호-물건순번 YYYY-#####-###
+    m = re.fullmatch(r"(\d{4})-(\d{5})-(\d{3})", s)
+    if m:
+        plnm = f"{m.group(1)}{m.group(2)}"          # 예: 202401774
+        cltr = str(int(m.group(3)))                 # 006 -> 6
+        return {"kind": "PLNM_CLTR", "PLNM_NO": plnm, "CLTR_NO": cltr}
+    
+    # 단일 공고번호(9~11자리 숫자)
+    if re.fullmatch(r"\d{9,11}", s):
+        return {"kind": "PLNM_NO", "PLNM_NO": s}
+    
+    return {"kind": "UNKNOWN", "RAW": s}
 
 
 def format_currency(amount: int) -> str:

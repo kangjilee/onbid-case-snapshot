@@ -1,133 +1,180 @@
+import os
+import urllib.parse
 import httpx
 import xmltodict
-import os
-from typing import Optional, Dict, Any
-from tenacity import retry, stop_after_attempt, wait_exponential
-from .utils import cache
-from .schema import NoticeOut
 import logging
+from cachetools import TTLCache
+from tenacity import retry, wait_exponential, stop_after_attempt
+from dotenv import load_dotenv
 
-logger = logging.getLogger(__name__)
+# .env 파일 로드
+load_dotenv()
+
+log = logging.getLogger("corex.onbid_client")
+
+ONBID_KEY = os.getenv("ONBID_KEY")
+MOCK_MODE = not bool(ONBID_KEY)
+BASE = "http://apis.data.go.kr/1360000/AuctionInfoService"
+KEY = urllib.parse.quote(ONBID_KEY or "DUMMY")
+_cache = TTLCache(maxsize=5000, ttl=6*3600)
 
 
-class OnbidClient:
-    def __init__(self, api_key: Optional[str] = None):
-        self.api_key = api_key or os.getenv('ONBID_KEY')
-        self.base_url = "http://apis.data.go.kr/1360000"
-        self.mock_mode = not self.api_key
-        
-    @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, max=5))
-    async def _fetch_data(self, endpoint: str, params: Dict[str, Any]) -> Dict[str, Any]:
-        """API 호출 with 지수백오프"""
-        if self.mock_mode:
-            return self._mock_response(endpoint, params)
-            
-        params['serviceKey'] = self.api_key
-        
-        async with httpx.AsyncClient(timeout=4.0) as client:
-            url = f"{self.base_url}/ThingInfoInquireSvc/{endpoint}"
-            response = await client.get(url, params=params)
-            response.raise_for_status()
-            
-            # XML을 dict로 변환
-            data = xmltodict.parse(response.text)
-            return data
+def _build_url(params: dict) -> str:
+    """쿼리 파라미터와 필수값(pageNo, numOfRows)을 포함한 URL 생성"""
+    base = {"serviceKey": KEY, "pageNo": 1, "numOfRows": 10}
+    base.update({k: v for k, v in params.items() if v})
+    return BASE + "/getUnifyUsageCltr?" + urllib.parse.urlencode(base)
+
+
+@retry(wait=wait_exponential(multiplier=0.5, max=5), stop=stop_after_attempt(3))
+async def _fetch(client: httpx.AsyncClient, url: str):
+    """HTTP 요청 및 XML 파싱"""
+    log.info("HTTP Request: %s", url)
+    r = await client.get(url, timeout=4.0)
+    if r.status_code >= 400:
+        log.error("응답 상태: %s, 내용: %s", r.status_code, r.text[:200])
+    r.raise_for_status()
+    return xmltodict.parse(r.text)
+
+
+async def fetch_unify_by_any(ids: dict):
+    """다중 쿼리 시스템: 관리번호 → (공고번호+물건번호) → 공고번호 단일 순으로 재시도"""
     
-    def _mock_response(self, endpoint: str, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Mock 데이터 반환 (최저가/면적/차수 포함)"""
-        if 'getUnifyUsageCltr' in endpoint:
-            return {
-                'response': {
-                    'body': {
-                        'items': {
-                            'item': {
-                                'goodsNm': '서울 강남구 아파트',
-                                'useCltrNm': '주거용',
-                                'landRightYn': 'Y',
-                                'shareYn': 'N',
-                                'bldgOnlyYn': 'N',
-                                'goodsArea': '84.52',
-                                'minSellPrc': '250000000',  # 2.5억원
-                                'dealSeq': '1',
-                                'dspsDt': '2024-03-15',
-                                'payScdDt': '2024-03-22',
-                                'PLNM_NO': params.get('CLTR_MNMT_NO', '12345678'),
-                                'PBCT_NO': '87654321',
-                                'CLTR_NO': '111',
-                                'CLTR_MNMT_NO': params.get('CLTR_MNMT_NO', '222')
-                            }
-                        }
-                    }
-                }
-            }
-        return {}
+    if MOCK_MODE:
+        log.info("MOCK 모드로 응답 생성")
+        return {"response": {"body": {"items": {"item": {
+            "PLNM_NO": "202401774",
+            "PBCT_NO": "123456", 
+            "CLTR_NO": "6",
+            "CLTR_MNMT_NO": ids.get("CLTR_MNMT_NO", "2016-0500-000201"),
+            "CTGR_FULL_NM": "상가/업무",
+            "SCR": "84.5",
+            "MIN_BID_PRC": "250000000",
+            "PBCT_RND": "1",
+            "PYMNT_DDLN": "40"
+        }}}}}
     
-    async def get_unify_by_mgmt(self, mgmt_no: str) -> Dict[str, Any]:
-        """온비드 ThingInfoInquireSvc/getUnifyUsageCltr 호출"""
-        cache_key = f"unify_{mgmt_no}"
-        
-        if cache_key in cache:
-            return cache[cache_key]
-        
-        try:
-            params = {'CLTR_MNMT_NO': mgmt_no, 'numOfRows': '1'}
-            data = await self._fetch_data('getUnifyUsageCltr', params)
-            cache[cache_key] = data
-            return data
-            
-        except Exception as e:
-            logger.error(f"API 호출 실패: {e}")
-            return self._mock_response('getUnifyUsageCltr', {'CLTR_MNMT_NO': mgmt_no})
-    
-    def normalize_unify(self, item: Dict[str, Any]) -> NoticeOut:
-        """API 응답을 NoticeOut으로 정규화 (ids와 주요 필드 채움)"""
-        raw_item = item.get('response', {}).get('body', {}).get('items', {}).get('item', item)
-        
-        # 금액을 만원 단위로 변환
-        min_price = None
-        if raw_item.get('minSellPrc'):
+    # 캐시: 관리번호 키로만 저장
+    key = ids.get("CLTR_MNMT_NO")
+    if key and key in _cache:
+        log.info("캐시에서 데이터 반환: %s", key)
+        return _cache[key]
+
+    # 시도 순서 정의
+    tries = []
+    if ids.get("CLTR_MNMT_NO"):
+        tries.append({"CLTR_MNMT_NO": ids["CLTR_MNMT_NO"]})
+    if ids.get("PLNM_NO") and ids.get("CLTR_NO"):
+        tries.append({"PLNM_NO": ids["PLNM_NO"], "CLTR_NO": ids["CLTR_NO"]})
+    if ids.get("PLNM_NO"):
+        tries.append({"PLNM_NO": ids["PLNM_NO"]})
+
+    last_err = None
+    async with httpx.AsyncClient() as client:
+        for i, params in enumerate(tries, 1):
+            url = _build_url(params)
             try:
-                min_price = int(raw_item['minSellPrc']) // 10000
-            except (ValueError, TypeError):
-                min_price = 25000  # 기본값
+                log.info("시도 %d/%d: %s", i, len(tries), params)
+                data = await _fetch(client, url)
+                
+                # 응답 구조 확인
+                response_body = data.get("response", {}).get("body", {})
+                items = response_body.get("items", {})
+                
+                if isinstance(items, dict) and "item" in items:
+                    item = items["item"]
+                    # 단일 item인지 리스트인지 확인
+                    if isinstance(item, list) and len(item) > 0:
+                        log.info("복수 결과에서 첫 번째 항목 사용")
+                        data["response"]["body"]["items"]["item"] = item[0]
+                    elif isinstance(item, dict):
+                        log.info("단일 결과 사용")
+                    else:
+                        continue
+                    
+                    # 캐시 저장
+                    if key:
+                        _cache[key] = data
+                    log.info("데이터 조회 성공")
+                    return data
+                else:
+                    log.warning("응답에 유효한 items가 없음")
+                    continue
+                    
+            except Exception as e:
+                log.warning("시도 %d 실패: %s", i, e)
+                last_err = e
+                continue
+    
+    raise RuntimeError(f"온비드 조회 실패: {last_err}")
+
+
+def normalize_unify(x: dict) -> dict:
+    """API 응답을 표준 형식으로 정규화"""
+    try:
+        item = x["response"]["body"]["items"]["item"]
+    except KeyError as e:
+        raise ValueError(f"응답 구조 오류: {e}")
+    
+    # ID 정보 추출
+    ids = {k: item.get(k, "") for k in ("PLNM_NO", "PBCT_NO", "CLTR_NO", "CLTR_MNMT_NO")}
+    
+    # 용도 분류
+    ctgr = item.get("CTGR_FULL_NM", "")
+    if "상가" in ctgr or "업무" in ctgr:
+        asset_type = "상가"
+        use_type = "상업용"
+    elif "아파트" in ctgr:
+        asset_type = "아파트" 
+        use_type = "주거용"
+    else:
+        asset_type = "기타"
+        use_type = "기타"
+    
+    # 수치 데이터 변환
+    area = float(item.get("SCR") or 0)
+    min_price = int(item.get("MIN_BID_PRC") or 0)
+    if min_price > 0:
+        min_price = min_price // 10000  # 원 -> 만원
+    
+    round_no = int(item.get("PBCT_RND") or 1)
+    pay_deadline_days = int(item.get("PYMNT_DDLN") or 40)
+    
+    log.info("정규화 완료: %s, %.1f㎡, %d만원, %d회차", asset_type, area, min_price, round_no)
+    
+    return {
+        "asset_type": asset_type,
+        "use_type": use_type,
+        "has_land_right": True,
+        "is_share": False,
+        "building_only": False,
+        "area_m2": area,
+        "min_price": min_price,
+        "round_no": round_no,
+        "dist_deadline": None,
+        "pay_deadline_days": pay_deadline_days,
+        "ids": ids
+    }
+
+
+# 기존 클래스 호환성을 위한 래퍼
+class OnbidClient:
+    def __init__(self, api_key=None):
+        self.api_key = api_key or ONBID_KEY
+        self.mock_mode = MOCK_MODE
         
-        return NoticeOut(
-            asset_type=self._classify_asset_type(raw_item.get('goodsNm', '')),
-            use_type=raw_item.get('useCltrNm', '알수없음'),
-            has_land_right=raw_item.get('landRightYn') == 'Y',
-            is_share=raw_item.get('shareYn') == 'Y',
-            building_only=raw_item.get('bldgOnlyYn') == 'Y',
-            area_m2=float(raw_item.get('goodsArea', 0)) if raw_item.get('goodsArea') else None,
-            min_price=min_price,
-            round_no=int(raw_item.get('dealSeq', 1)) if raw_item.get('dealSeq') else None,
-            dist_deadline=raw_item.get('dspsDt'),
-            pay_deadline_days=self._calc_deadline_days(raw_item.get('payScdDt')),
-            ids={
-                'PLNM_NO': raw_item.get('PLNM_NO', ''),
-                'PBCT_NO': raw_item.get('PBCT_NO', ''),
-                'CLTR_NO': raw_item.get('CLTR_NO', ''),
-                'CLTR_MNMT_NO': raw_item.get('CLTR_MNMT_NO', '')
-            }
-        )
-    
-    def _classify_asset_type(self, goods_name: str) -> str:
-        """상품명에서 자산유형 분류"""
-        if '아파트' in goods_name:
-            return '아파트'
-        elif '오피스텔' in goods_name:
-            return '오피스텔'
-        elif '상가' in goods_name or '상업' in goods_name:
-            return '상가'
-        elif '사무실' in goods_name or '오피스' in goods_name:
-            return '사무실'
-        elif '토지' in goods_name or '대지' in goods_name:
-            return '토지'
+        if self.mock_mode:
+            log.info("MOCK 모드로 실행 - API 키 없음")
         else:
-            return '기타'
+            log.info(f"LIVE 모드로 실행 - API 키 확인됨 (길이: {len(self.api_key)})")
     
-    def _calc_deadline_days(self, pay_date: Optional[str]) -> Optional[int]:
-        """납부기한까지 일수 계산"""
-        if not pay_date:
-            return 7  # 기본값
-        # 실제 구현시 날짜 파싱 로직 추가
-        return 7
+    async def get_unify_by_mgmt(self, mgmt_no: str):
+        """기존 호환성을 위한 래퍼"""
+        ids = {"CLTR_MNMT_NO": mgmt_no}
+        return await fetch_unify_by_any(ids)
+    
+    def normalize_unify(self, data: dict):
+        """기존 호환성을 위한 래퍼"""
+        from .schema import NoticeOut
+        normalized = normalize_unify(data)
+        return NoticeOut(**normalized)
