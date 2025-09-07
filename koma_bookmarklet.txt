@@ -1,0 +1,10 @@
+KOMA Tank 수집 북마클릿 (브라우저 북마크에 추가)
+
+제목: KOMA Tank 수집
+URL: javascript:(async()=>{try{const payload={source:'tank',source_url:location.href,main_html:document.documentElement.outerHTML.slice(0,400000),docs:[],harvested_at:new Date().toISOString(),user_agent:navigator.userAgent};const response=await fetch('http://localhost:9000/ingest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(response.ok){const result=await response.json();alert('✅ KOMA로 전송 완료!\n파일: '+result.summary.saved_to);}else{alert('❌ 전송 실패: '+response.status);}}catch(e){alert('❌ 오류: '+e.message);}})();
+
+사용법:
+1. 위 URL을 브라우저 북마크로 추가
+2. Tank 상세 페이지에서 북마크 클릭
+3. "KOMA로 전송 완료!" 메시지 확인
+4. 앱에서 파싱 버튼 클릭

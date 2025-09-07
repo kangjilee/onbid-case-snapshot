@@ -159,7 +159,7 @@
                 user_agent: navigator.userAgent
             };
             
-            // 로컬 앱으로 전송
+            // 로컬 앱으로 전송 (ingest 서버 포트 9000)
             const response = await fetch('http://localhost:9000/ingest', {
                 method: 'POST',
                 headers: {

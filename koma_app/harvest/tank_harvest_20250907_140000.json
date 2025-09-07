@@ -1,0 +1,23 @@
+{
+  "source": "tank",
+  "source_url": "https://tankauction.com/pa/paView.php?caseNo=2024-12345",
+  "main_html": "<html><body><h1>물건상세정보</h1><table><tr><td>사건번호</td><td>2024-12345</td></tr><tr><td>소재지</td><td>서울특별시 강남구 역삼동 123-45</td></tr><tr><td>최저가</td><td>250,000,000원</td></tr><tr><td>면적</td><td>84.5㎡</td></tr><tr><td>용도</td><td>아파트</td></tr><tr><td>매각기간</td><td>2024-09-01 ~ 2024-09-15</td></tr></table></body></html>",
+  "docs": [
+    {
+      "type": "html",
+      "url": "https://tankauction.com/appraisal.php?id=123",
+      "html": "<html><body><h2>감정평가서</h2><p>감정가격: 280,000,000원</p><p>시세: 290,000,000원</p></body></html>",
+      "text": "감정평가서 감정가격: 280,000,000원 시세: 290,000,000원",
+      "timestamp": "2024-09-07T14:00:00.000Z"
+    },
+    {
+      "type": "html", 
+      "url": "https://tankauction.com/property_statement.php?id=123",
+      "html": "<html><body><h2>재산명세서</h2><p>배분요구종기: 2024-12-31</p><p>선순위저당권설정</p><p>임차인 존재</p></body></html>",
+      "text": "재산명세서 배분요구종기: 2024-12-31 선순위저당권설정 임차인 존재",
+      "timestamp": "2024-09-07T14:00:01.000Z"
+    }
+  ],
+  "harvested_at": "2024-09-07T14:00:00.000Z",
+  "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+}

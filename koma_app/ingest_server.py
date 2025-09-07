@@ -18,8 +18,9 @@ app.add_middleware(
 )
 
 # 데이터 저장 디렉터리
-DATA_DIR = "data/tank_harvest"
-os.makedirs(DATA_DIR, exist_ok=True)
+from pathlib import Path
+DATA_DIR = Path("./harvest")
+DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 @app.post("/ingest")
 async def ingest(req: Request):
@@ -28,19 +29,18 @@ async def ingest(req: Request):
     # 타임스탬프 추가
     payload["harvested_at"] = datetime.now().isoformat()
     
-    # 파일명 생성 (URL에서 케이스 번호 추출 시도)
-    source_url = payload.get("source_url", "unknown")
+    # 파일명 생성
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     filename = f"tank_harvest_{timestamp}.json"
     
     # 데이터 저장
-    filepath = os.path.join(DATA_DIR, filename)
-    with open(filepath, 'w', encoding='utf-8') as f:
-        json.dump(payload, f, ensure_ascii=False, indent=2)
+    filepath = DATA_DIR / filename
+    filepath.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding='utf-8')
     
     # Tank HTML 파싱 처리
     try:
-        normalized_data = parse_tank_payload(payload)
+        from corex.tank_parse_new import parse_tank_package
+        normalized_data = parse_tank_package(payload)
         print(f"[INGEST] Parsed tank data: {len(normalized_data)} fields")
     except Exception as e:
         print(f"[INGEST] Parse error: {e}")
@@ -56,6 +56,7 @@ async def ingest(req: Request):
     
     return {
         "ok": True, 
+        "saved": str(filepath),
         "summary": summary,
         "got": {k: (len(v) if isinstance(v, str) else len(v) if isinstance(v, list) else v) 
                 for k, v in payload.items() if k != "harvested_at"}
@@ -63,11 +64,11 @@ async def ingest(req: Request):
 
 @app.get("/ingest/status")
 async def status():
-    files = [f for f in os.listdir(DATA_DIR) if f.endswith('.json')]
+    files = list(DATA_DIR.glob("*.json"))
     return {
         "status": "running",
         "harvested_files": len(files),
-        "latest_files": sorted(files)[-5:] if files else []
+        "latest_files": [f.name for f in sorted(files, reverse=True)[:5]]
     }
 
 def run_server():
