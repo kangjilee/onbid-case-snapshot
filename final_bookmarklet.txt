@@ -1,0 +1,4 @@
+KOMA Tank 수집 최종 북마클릿
+
+제목: KOMA Tank 수집
+URL: javascript:(async()=>{try{const payload={source:'tank',source_url:location.href,main_html:document.documentElement.outerHTML.slice(0,400000),docs:[],harvested_at:new Date().toISOString(),user_agent:navigator.userAgent};const response=await fetch('http://localhost:9000/ingest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(response.ok){const result=await response.json();alert('✅ KOMA로 전송 완료!\n파일: '+result.summary.saved_to);}else{alert('❌ 전송 실패: '+response.status);}}catch(e){alert('❌ 오류: '+e.message);}})();
