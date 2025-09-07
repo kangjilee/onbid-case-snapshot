@@ -1,27 +1,16 @@
 import streamlit as st
-import asyncio
 import os
-import logging
 from datetime import datetime
 from dotenv import load_dotenv
-
-from corex.schema import BundleOut
-from corex.onbid_client import OnbidClient
-from corex.rights import summarize_rights
-from corex.price import quick_price
-from corex.bid import make_scenarios
-from corex.utils import parse_input, format_currency
-
-# 수신 서버 시작
-from ingest_server import ensure_server
-ensure_server()
 
 # 환경 변수 로드
 load_dotenv()
 
-# 로깅 설정
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+# 전역 상태 변수 (MODE 통일)
+KEY_ONBID = os.getenv("ONBID_KEY_ONBID", "").strip()
+KEY_DATA = os.getenv("ONBID_KEY_DATA", "").strip()
+MODE = "LIVE" if (KEY_ONBID or KEY_DATA) else "MOCK"
+mode = MODE  # 레거시 대비
 
 # 페이지 설정
 st.set_page_config(
@@ -30,12 +19,8 @@ st.set_page_config(
     layout="wide"
 )
 
-# 상단 배지 - 단일 키 체크 버그 수정
-KEY_ONBID = os.getenv("ONBID_KEY_ONBID","").strip()
-KEY_DATA  = os.getenv("ONBID_KEY_DATA","").strip()
-MODE = "LIVE" if (KEY_ONBID or KEY_DATA) else "MOCK"
+# 상단 배지
 updated_at = datetime.now().strftime("%H:%M:%S")
-
 col_badge1, col_badge2, col_badge3 = st.columns([1, 1, 2])
 with col_badge1:
     st.success("✅ OK: app running")
@@ -51,19 +36,13 @@ with col_badge3:
 st.title("🏠 KOMA 공매 도우미")
 st.caption("공매번호 입력 → 실시간 온비드 조회 → 권리분석 → 입찰가 3안")
 
-# 사이드바 설정
+# 사이드바
 with st.sidebar:
     st.header("⚙️ 설정")
-    
-    # 기본 설정
-    quick_mode = st.toggle("빠른판독", value=True, help="간소한 분석으로 빠른 응답")
-    
-    # 비용 가정
-    st.subheader("💰 비용 가정")
-    target_yield = st.slider("목표 수익률 (%)", min_value=5.0, max_value=15.0, value=8.0, step=0.5)
-    loan_ratio = st.slider("대출 비율 (%)", min_value=0, max_value=90, value=60, step=5)
-    interest_rate = st.slider("대출 이자율 (%)", min_value=3.0, max_value=10.0, value=6.0, step=0.1)
-    vacancy_rate = st.slider("공실률 (%)", min_value=0, max_value=30, value=10, step=5)
+    if MODE == "LIVE":
+        st.success("🔑 API 키 연결됨")
+    else:
+        st.warning("⚠️ API 키 없음 (MOCK 모드)")
 
 # 메인 인터페이스
 col1, col2 = st.columns([3, 1])
@@ -126,26 +105,9 @@ with col_info2:
 
 with col_info3:
     st.caption("🔧 **설정**") 
-    st.caption(f"목표수익률: {target_yield}% | 대출: {loan_ratio}%")
-
-# 수신 서버 상태 표시
-st.divider()
-with st.expander("🤖 Tank 수집 서버 상태"):
-    if st.button("상태 확인"):
-        try:
-            import requests
-            response = requests.get("http://localhost:9000/ingest/status")
-            if response.ok:
-                status_data = response.json()
-                st.success("✅ 수신 서버 동작중")
-                st.json(status_data)
-            else:
-                st.error("❌ 수신 서버 응답 없음")
-        except Exception as e:
-            st.error(f"❌ 수신 서버 연결 실패: {str(e)}")
+    st.caption("HTTP 우회 모드")
 
 # 초기 로딩 메시지
 if not user_in and 'app_loaded' not in st.session_state:
     st.session_state.app_loaded = True
     st.info("✅ KOMA 공매 도우미가 실행되었습니다. 공매번호를 입력하여 분석을 시작하세요.")
-    st.info("🤖 Tank 자동 수집 서버가 백그라운드에서 실행중입니다.")

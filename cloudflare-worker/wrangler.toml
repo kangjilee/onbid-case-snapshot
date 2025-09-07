@@ -1,0 +1,9 @@
+name = "onbid-relay"
+main = "worker.js"
+compatibility_date = "2024-01-15"
+
+[env.production]
+name = "onbid-relay"
+
+[env.development]
+name = "onbid-relay-dev"
